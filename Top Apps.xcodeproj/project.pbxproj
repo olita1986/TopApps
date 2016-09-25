@@ -22,6 +22,8 @@
 		C84B42151D9618D000C7231D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C84B42141D9618D000C7231D /* CoreGraphics.framework */; };
 		C85291CA1D96001800B9B286 /* AppCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85291C91D96001800B9B286 /* AppCollectionViewController.swift */; };
 		C85291CC1D96009100B9B286 /* AppCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85291CB1D96009100B9B286 /* AppCollectionViewCell.swift */; };
+		C863EDA21D9829F000EBDBC5 /* SecondCustomSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C863EDA11D9829F000EBDBC5 /* SecondCustomSegue.swift */; };
+		C863EDA41D982A0500EBDBC5 /* SecondCustomSegueUnwind.swift in Sources */ = {isa = PBXBuildFile; fileRef = C863EDA31D982A0500EBDBC5 /* SecondCustomSegueUnwind.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,8 @@
 		C84B42141D9618D000C7231D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		C85291C91D96001800B9B286 /* AppCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCollectionViewController.swift; sourceTree = "<group>"; };
 		C85291CB1D96009100B9B286 /* AppCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCollectionViewCell.swift; sourceTree = "<group>"; };
+		C863EDA11D9829F000EBDBC5 /* SecondCustomSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondCustomSegue.swift; sourceTree = "<group>"; };
+		C863EDA31D982A0500EBDBC5 /* SecondCustomSegueUnwind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondCustomSegueUnwind.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +127,8 @@
 			children = (
 				C84B420F1D96128E00C7231D /* FirstCustomSegue.swift */,
 				C84B42111D9612B200C7231D /* FirstCustomSegueUnwind.swift */,
+				C863EDA11D9829F000EBDBC5 /* SecondCustomSegue.swift */,
+				C863EDA31D982A0500EBDBC5 /* SecondCustomSegueUnwind.swift */,
 			);
 			name = "Custom Segues";
 			sourceTree = "<group>";
@@ -216,7 +222,9 @@
 				C834D8481D95B2BF00B9E1AF /* CategoryTableViewController.swift in Sources */,
 				C834D8411D95944A00B9E1AF /* AppsTableViewController.swift in Sources */,
 				C834D82F1D9593C600B9E1AF /* AppDelegate.swift in Sources */,
+				C863EDA21D9829F000EBDBC5 /* SecondCustomSegue.swift in Sources */,
 				C84B42101D96128E00C7231D /* FirstCustomSegue.swift in Sources */,
+				C863EDA41D982A0500EBDBC5 /* SecondCustomSegueUnwind.swift in Sources */,
 				C85291CC1D96009100B9B286 /* AppCollectionViewCell.swift in Sources */,
 				C85291CA1D96001800B9B286 /* AppCollectionViewController.swift in Sources */,
 			);

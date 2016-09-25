@@ -22,6 +22,18 @@ class AppsTableViewController: UITableViewController {
 
         self.title = "Apps"
         getTopApps(category: categoryNumber)
+        
+        self.navigationItem.hidesBackButton = true
+        
+        //.... Set Right/Left Bar Button item
+       
+        let leftBarButton = UIBarButtonItem(title: "< Categories", style: .done, target: self, action: #selector(AppsTableViewController.performSegueFromApps))
+        self.navigationItem.leftBarButtonItem = leftBarButton
+    }
+    
+    func performSegueFromApps () {
+        
+        performSegue(withIdentifier: "idFirstSegueUnwind", sender: self)
     }
     
     func getTopApps (category: String) {
@@ -182,7 +194,13 @@ class AppsTableViewController: UITableViewController {
 
         return cell
     }
- 
+    
+    @IBAction func unwindFromDetail (_ sender: UIStoryboardSegue) {
+        
+        
+    }
+    
+    
 
     /*
     // Override to support conditional editing of the table view.
