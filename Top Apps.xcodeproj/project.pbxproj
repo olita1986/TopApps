@@ -24,6 +24,7 @@
 		C85291CC1D96009100B9B286 /* AppCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85291CB1D96009100B9B286 /* AppCollectionViewCell.swift */; };
 		C863EDA21D9829F000EBDBC5 /* SecondCustomSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C863EDA11D9829F000EBDBC5 /* SecondCustomSegue.swift */; };
 		C863EDA41D982A0500EBDBC5 /* SecondCustomSegueUnwind.swift in Sources */ = {isa = PBXBuildFile; fileRef = C863EDA31D982A0500EBDBC5 /* SecondCustomSegueUnwind.swift */; };
+		C863EDA61D989F9100EBDBC5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C863EDA51D989F9100EBDBC5 /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		C85291CB1D96009100B9B286 /* AppCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCollectionViewCell.swift; sourceTree = "<group>"; };
 		C863EDA11D9829F000EBDBC5 /* SecondCustomSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondCustomSegue.swift; sourceTree = "<group>"; };
 		C863EDA31D982A0500EBDBC5 /* SecondCustomSegueUnwind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondCustomSegueUnwind.swift; sourceTree = "<group>"; };
+		C863EDA51D989F9100EBDBC5 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 			children = (
 				C85291C91D96001800B9B286 /* AppCollectionViewController.swift */,
 				C85291CB1D96009100B9B286 /* AppCollectionViewCell.swift */,
+				C863EDA51D989F9100EBDBC5 /* DetailViewController.swift */,
 			);
 			name = "iPad Controllers";
 			sourceTree = "<group>";
@@ -219,6 +222,7 @@
 				C834D8311D9593C600B9E1AF /* ViewController.swift in Sources */,
 				C834D8431D9594A200B9E1AF /* AppsTableViewCell.swift in Sources */,
 				C84B42121D9612B200C7231D /* FirstCustomSegueUnwind.swift in Sources */,
+				C863EDA61D989F9100EBDBC5 /* DetailViewController.swift in Sources */,
 				C834D8481D95B2BF00B9E1AF /* CategoryTableViewController.swift in Sources */,
 				C834D8411D95944A00B9E1AF /* AppsTableViewController.swift in Sources */,
 				C834D82F1D9593C600B9E1AF /* AppDelegate.swift in Sources */,

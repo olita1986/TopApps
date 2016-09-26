@@ -20,7 +20,7 @@ class SecondCustomSegue: UIStoryboardSegue {
         
         //secondVC?.frame = CGRect(x: 0, y: height, width: width, height: height )
         
-        secondVC?.frame = CGRect(x: 0, y: 64, width: 0, height: 0)
+        secondVC?.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         
         let window = UIApplication.shared.keyWindow
         
@@ -31,7 +31,7 @@ class SecondCustomSegue: UIStoryboardSegue {
             // firstVC?.frame = CGRect(x: 0, y: -height , width: width, height: height)
             //secondVC?.frame = CGRect(x: 0, y: -height , width: width, height: height)
             
-            secondVC?.frame = CGRect(x: 0, y: 64, width: width, height: height)
+            secondVC?.frame = CGRect(x: 0, y: 0, width: width, height: height)
             
             
         }) { (Finished) in

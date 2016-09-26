@@ -1,17 +1,15 @@
 //
-//  ViewController.swift
+//  DetailViewController.swift
 //  Top Apps
 //
-//  Created by orlando arzola on 23.09.16.
+//  Created by orlando arzola on 25.09.16.
 //  Copyright © 2016 orlando arzola. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
+class DetailViewController: UIViewController {
     
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var releaseDateLabel: UILabel!
     var image: UIImage?
     var summary = ""
     var category = ""
@@ -20,28 +18,29 @@ class ViewController: UIViewController {
     var date = ""
     var appName = ""
     
-    
-    @IBOutlet weak var appImageView: UIImageView!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var rightsLabel: UILabel!
+    @IBOutlet weak var releaseLabel: UILabel!
     @IBOutlet weak var summaryTextView: UITextView!
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var artistLabel: UILabel!
-    @IBOutlet weak var rightsLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var appNameLable: UILabel!
-    
-    
+    @IBOutlet weak var appNameLabel: UILabel!
+    @IBOutlet weak var appImageView: UIImageView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.title = "Details"
-        
+
+        // Do any additional setup after loading the view.
         
         self.navigationItem.hidesBackButton = true
         
         //.... Set Right/Left Bar Button item
         
-        let leftBarButton = UIBarButtonItem(title: "< Top Apps", style: .done, target: self, action: #selector(ViewController.performSegueFromDetails))
+        let leftBarButton = UIBarButtonItem(title: "< Top Apps", style: .done, target: self, action: #selector(DetailViewController.performSegueFromDetails))
         self.navigationItem.leftBarButtonItem = leftBarButton
+        
+        self.title = "Details"
         
         appImageView.image = image
         
@@ -50,16 +49,19 @@ class ViewController: UIViewController {
         artistLabel.text = artist
         rightsLabel.text = rights
         dateLabel.text = date
-        appNameLable.text = appName
+        appNameLabel.text = appName
         
         animations()
-        
     }
-    
     
     func performSegueFromDetails () {
         
         performSegue(withIdentifier: "idSecondCustomSegueUnwind", sender: self)
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
     override func viewDidLayoutSubviews() {
@@ -89,9 +91,9 @@ class ViewController: UIViewController {
         artistLabel.alpha = 0
         rightsLabel.alpha = 0
         dateLabel.alpha = 0
-        appNameLable.alpha = 0
+        appNameLabel.alpha = 0
         descriptionLabel.alpha = 0
-        releaseDateLabel.alpha = 0
+        releaseLabel.alpha = 0
         
         UIView.animate(withDuration: 0.9, animations: {
             
@@ -102,17 +104,21 @@ class ViewController: UIViewController {
             self.artistLabel.alpha = 1
             self.rightsLabel.alpha = 1
             self.dateLabel.alpha = 1
-            self.appNameLable.alpha = 1
+            self.appNameLabel.alpha = 1
             self.descriptionLabel.alpha = 1
-            self.releaseDateLabel.alpha = 1
+            self.releaseLabel.alpha = 1
         })
     }
+    
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
     }
-
+    */
 
 }
-

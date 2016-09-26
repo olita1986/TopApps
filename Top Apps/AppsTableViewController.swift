@@ -15,6 +15,10 @@ class AppsTableViewController: UITableViewController {
     var nameArray = [String]()
     var categoryArray = [String]()
     var priceArray = [String]()
+    var summaryArray = [String]()
+    var artistArray = [String]()
+    var rightArray = [String]()
+    var releaseDateArray = [String]()
     var cache =  NSCache<AnyObject, UIImage>()
     
     override func viewDidLoad() {
@@ -82,6 +86,38 @@ class AppsTableViewController: UITableViewController {
                                             self.nameArray.append(name)
                                         }
                                         
+                                    }
+                                    
+                                    if let title = app["summary"] as? NSDictionary {
+                                        
+                                        if let name = title["label"] as? String {
+                                            
+                                            self.summaryArray.append(name)
+                                        }
+                                        
+                                    }
+                                    
+                                    if let title = app["im:artist"] as? NSDictionary {
+                                        
+                                        if let name = title["label"] as? String {
+                                            
+                                            self.artistArray.append(name)
+                                        }
+                                        
+                                    }
+                                    
+                                    if let title = app["rights"] as? NSDictionary {
+                                        
+                                        if let name = title["label"] as? String {
+                                            
+                                            self.rightArray.append(name)
+                                        }
+                                        
+                                    }
+                                    
+                                    if let category = app["im:releaseDate"] as? NSDictionary, let attributes = category["attributes"] as? NSDictionary, let label = attributes["label"] as? String {
+                                        
+                                        self.releaseDateArray.append(label)
                                     }
                                     
                                     if let category = app["category"] as? NSDictionary, let attributes = category["attributes"] as? NSDictionary, let label = attributes["label"] as? String {
@@ -202,49 +238,32 @@ class AppsTableViewController: UITableViewController {
     
     
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
+  
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "appToDetails" {
+            
+            let indexPath: IndexPath = tableView.indexPathForSelectedRow!
+            
+            let detailVC = segue.destination as! ViewController
+            
+            detailVC.appName = nameArray[indexPath.row]
+            detailVC.rights = rightArray[indexPath.row]
+            detailVC.artist = artistArray[indexPath.row]
+            detailVC.category = categoryArray[indexPath.row]
+            detailVC.summary = summaryArray[indexPath.row]
+            detailVC.image = cache.object(forKey: indexPath.row as AnyObject)
+            detailVC.date = releaseDateArray[indexPath.row]
+            
+        }
     }
-    */
+    
 
 }

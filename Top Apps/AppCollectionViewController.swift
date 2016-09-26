@@ -12,11 +12,17 @@ private let reuseIdentifier = "Cell"
 
 class AppCollectionViewController: UICollectionViewController {
     
+    var indexPathRow = 0
+    
     var categoryNumber = ""
     var urlArray = [String]()
     var nameArray = [String]()
     var categoryArray = [String]()
     var priceArray = [String]()
+    var summaryArray = [String]()
+    var artistArray = [String]()
+    var rightArray = [String]()
+    var releaseDateArray = [String]()
     var cache =  NSCache<AnyObject, UIImage>()
 
     override func viewDidLoad() {
@@ -30,7 +36,21 @@ class AppCollectionViewController: UICollectionViewController {
 
         // Do any additional setup after loading the view.
         
+        self.title = "Top Apps"
+        
         getTopApps(category: categoryNumber)
+        
+        self.navigationItem.hidesBackButton = true
+        
+        //.... Set Right/Left Bar Button item
+        
+        let leftBarButton = UIBarButtonItem(title: "< Categories", style: .done, target: self, action: #selector(AppCollectionViewController.performSegueFromApps))
+        self.navigationItem.leftBarButtonItem = leftBarButton
+    }
+    
+    func performSegueFromApps () {
+        
+        performSegue(withIdentifier: "idFirstSegueUnwind", sender: self)
     }
     
     func getTopApps (category: String) {
@@ -97,6 +117,38 @@ class AppCollectionViewController: UICollectionViewController {
                                             }
                                         }
                                     }
+                                    
+                                    if let title = app["summary"] as? NSDictionary {
+                                        
+                                        if let name = title["label"] as? String {
+                                            
+                                            self.summaryArray.append(name)
+                                        }
+                                        
+                                    }
+                                    
+                                    if let title = app["im:artist"] as? NSDictionary {
+                                        
+                                        if let name = title["label"] as? String {
+                                            
+                                            self.artistArray.append(name)
+                                        }
+                                        
+                                    }
+                                    
+                                    if let title = app["rights"] as? NSDictionary {
+                                        
+                                        if let name = title["label"] as? String {
+                                            
+                                            self.rightArray.append(name)
+                                        }
+                                        
+                                    }
+                                    
+                                    if let category = app["im:releaseDate"] as? NSDictionary, let attributes = category["attributes"] as? NSDictionary, let label = attributes["label"] as? String {
+                                        
+                                        self.releaseDateArray.append(label)
+                                    }
                                 }
                             }
                         }
@@ -126,15 +178,6 @@ class AppCollectionViewController: UICollectionViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     // MARK: UICollectionViewDataSource
 
@@ -209,36 +252,45 @@ class AppCollectionViewController: UICollectionViewController {
         return cell
     }
     
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        //indexPathRow = indexPath.row
+        
+        //print(indexPath.row)
+        
     }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
     
+
+    @IBAction func unwindFromDetail (_ sender: UIStoryboardSegue) {
+        
+        
     }
-    */
+    
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "appToDetails" {
+        
+            let indexPath = collectionView?.indexPath(for: sender as! UICollectionViewCell)
+
+
+            print(indexPath?.row)
+            
+            let detailVC = segue.destination as! DetailViewController
+            
+            detailVC.appName = nameArray[(indexPath?.row)!]
+            detailVC.rights = rightArray[(indexPath?.row)!]
+            detailVC.artist = artistArray[(indexPath?.row)!]
+            detailVC.category = categoryArray[(indexPath?.row)!]
+            detailVC.summary = summaryArray[(indexPath?.row)!]
+            detailVC.image = cache.object(forKey: (indexPath?.row)! as AnyObject)
+            detailVC.date = releaseDateArray[(indexPath?.row)!]
+            
+        }
+ 
+    }
+    
 
 }
