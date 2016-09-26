@@ -35,10 +35,9 @@ class ViewController: UIViewController {
         
         self.title = "Details"
         
+        // Creating Custon Bar Button to perform custom segues
         
         self.navigationItem.hidesBackButton = true
-        
-        //.... Set Right/Left Bar Button item
         
         let leftBarButton = UIBarButtonItem(title: "< Top Apps", style: .done, target: self, action: #selector(ViewController.performSegueFromDetails))
         self.navigationItem.leftBarButtonItem = leftBarButton
@@ -54,6 +53,22 @@ class ViewController: UIViewController {
         
         animations()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
+        NotificationCenter.default.post(name: ReachabilityChangedNotification, object: reachability)
+        /*
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(CategoryTableViewController.reachabilityChanged(note:)),name: ReachabilityChangedNotification,object: reachability)
+        do{
+            try reachability.startNotifier()
+        }catch{
+            print("could not start reachability notifier")
+        }
+ */
     }
     
     
@@ -112,6 +127,8 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+   
 
 
 }

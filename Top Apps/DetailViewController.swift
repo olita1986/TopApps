@@ -33,9 +33,10 @@ class DetailViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        // Creating Custon Bar Button to perform custom segues
+        
         self.navigationItem.hidesBackButton = true
         
-        //.... Set Right/Left Bar Button item
         
         let leftBarButton = UIBarButtonItem(title: "< Top Apps", style: .done, target: self, action: #selector(DetailViewController.performSegueFromDetails))
         self.navigationItem.leftBarButtonItem = leftBarButton
@@ -52,6 +53,12 @@ class DetailViewController: UIViewController {
         appNameLabel.text = appName
         
         animations()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.post(name: ReachabilityChangedNotification, object: reachability)
     }
     
     func performSegueFromDetails () {
@@ -110,6 +117,7 @@ class DetailViewController: UIViewController {
         })
     }
     
+
 
     /*
     // MARK: - Navigation

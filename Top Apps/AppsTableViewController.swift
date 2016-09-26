@@ -14,7 +14,6 @@ class AppsTableViewController: UITableViewController {
     var urlArray = [String]()
     var nameArray = [String]()
     var categoryArray = [String]()
-    var priceArray = [String]()
     var summaryArray = [String]()
     var artistArray = [String]()
     var rightArray = [String]()
@@ -27,12 +26,19 @@ class AppsTableViewController: UITableViewController {
         self.title = "Apps"
         getTopApps(category: categoryNumber)
         
-        self.navigationItem.hidesBackButton = true
+        // Creating Custon Bar Button to perform custom segues
         
-        //.... Set Right/Left Bar Button item
-       
+        self.navigationItem.hidesBackButton = true
+    
         let leftBarButton = UIBarButtonItem(title: "< Categories", style: .done, target: self, action: #selector(AppsTableViewController.performSegueFromApps))
         self.navigationItem.leftBarButtonItem = leftBarButton
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.post(name: ReachabilityChangedNotification, object: reachability)
+        
     }
     
     func performSegueFromApps () {
@@ -70,7 +76,8 @@ class AppsTableViewController: UITableViewController {
                     do {
                         
                         
-                        // Extracting the result count
+                        // Extracting the result from json
+                        
                         let jsonResult = try JSONSerialization.jsonObject(with: urlContent, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
                         
                         if let feed = jsonResult["feed"] as? NSDictionary, let entry = feed["entry"] as? NSArray {
@@ -236,9 +243,6 @@ class AppsTableViewController: UITableViewController {
         
     }
     
-    
-
-  
 
 
     // MARK: - Navigation

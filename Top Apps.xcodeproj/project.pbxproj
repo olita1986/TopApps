@@ -25,6 +25,7 @@
 		C863EDA21D9829F000EBDBC5 /* SecondCustomSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C863EDA11D9829F000EBDBC5 /* SecondCustomSegue.swift */; };
 		C863EDA41D982A0500EBDBC5 /* SecondCustomSegueUnwind.swift in Sources */ = {isa = PBXBuildFile; fileRef = C863EDA31D982A0500EBDBC5 /* SecondCustomSegueUnwind.swift */; };
 		C863EDA61D989F9100EBDBC5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C863EDA51D989F9100EBDBC5 /* DetailViewController.swift */; };
+		C863EDA91D98AF2E00EBDBC5 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = C863EDA81D98AF2E00EBDBC5 /* Reachability.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		C863EDA11D9829F000EBDBC5 /* SecondCustomSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondCustomSegue.swift; sourceTree = "<group>"; };
 		C863EDA31D982A0500EBDBC5 /* SecondCustomSegueUnwind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondCustomSegueUnwind.swift; sourceTree = "<group>"; };
 		C863EDA51D989F9100EBDBC5 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		C863EDA81D98AF2E00EBDBC5 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				C834D8451D95A1CC00B9E1AF /* Default-568h@2x.png */,
+				C863EDA71D98AE7300EBDBC5 /* Helpers */,
 				C834D82D1D9593C600B9E1AF /* Top Apps */,
 				C834D82C1D9593C600B9E1AF /* Products */,
 				C84B42131D9618D000C7231D /* Frameworks */,
@@ -142,6 +145,14 @@
 				C84B42141D9618D000C7231D /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C863EDA71D98AE7300EBDBC5 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				C863EDA81D98AF2E00EBDBC5 /* Reachability.swift */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,6 +242,7 @@
 				C863EDA41D982A0500EBDBC5 /* SecondCustomSegueUnwind.swift in Sources */,
 				C85291CC1D96009100B9B286 /* AppCollectionViewCell.swift in Sources */,
 				C85291CA1D96001800B9B286 /* AppCollectionViewController.swift in Sources */,
+				C863EDA91D98AF2E00EBDBC5 /* Reachability.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

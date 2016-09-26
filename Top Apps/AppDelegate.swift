@@ -8,6 +8,8 @@
 
 import UIKit
 
+let reachability = Reachability()!
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -67,6 +69,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
     }
+
+      func createAlert (title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        
+        
+        let navigationController = UIApplication.shared.windows[0].rootViewController as! UINavigationController
+        
+        let activeViewCont = navigationController.visibleViewController
+        
+        activeViewCont?.present(alert, animated: false, completion: nil)
+        
+    }
+ 
 
 
 }

@@ -18,7 +18,6 @@ class AppCollectionViewController: UICollectionViewController {
     var urlArray = [String]()
     var nameArray = [String]()
     var categoryArray = [String]()
-    var priceArray = [String]()
     var summaryArray = [String]()
     var artistArray = [String]()
     var rightArray = [String]()
@@ -28,30 +27,31 @@ class AppCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
+   
         
         self.title = "Top Apps"
         
         getTopApps(category: categoryNumber)
         
-        self.navigationItem.hidesBackButton = true
+        // Creating Custon Bar Button to perform custom segues
         
-        //.... Set Right/Left Bar Button item
+        self.navigationItem.hidesBackButton = true
         
         let leftBarButton = UIBarButtonItem(title: "< Categories", style: .done, target: self, action: #selector(AppCollectionViewController.performSegueFromApps))
         self.navigationItem.leftBarButtonItem = leftBarButton
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.post(name: ReachabilityChangedNotification, object: reachability)
     }
     
     func performSegueFromApps () {
         
         performSegue(withIdentifier: "idFirstSegueUnwind", sender: self)
     }
+    
     
     func getTopApps (category: String) {
         
@@ -83,7 +83,7 @@ class AppCollectionViewController: UICollectionViewController {
                     do {
                         
                         
-                        // Extracting the result count
+                        // Extracting the result from the json 
                         let jsonResult = try JSONSerialization.jsonObject(with: urlContent, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
                         
                         if let feed = jsonResult["feed"] as? NSDictionary, let entry = feed["entry"] as? NSArray {
@@ -260,12 +260,14 @@ class AppCollectionViewController: UICollectionViewController {
         
     }
     
+    // action for unwind custom segue
 
     @IBAction func unwindFromDetail (_ sender: UIStoryboardSegue) {
         
         
     }
     
+
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
