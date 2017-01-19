@@ -23,8 +23,10 @@ class CategoryTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        // Adding observer for internet connection status
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         NotificationCenter.default.addObserver(self, selector: #selector(CategoryTableViewController.reachabilityChanged(note:)),name: ReachabilityChangedNotification,object: reachability)
         do{
@@ -33,20 +35,14 @@ class CategoryTableViewController: UITableViewController {
             print("could not start reachability notifier")
         }
         
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
         NotificationCenter.default.post(name: ReachabilityChangedNotification, object: reachability)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -99,6 +95,7 @@ class CategoryTableViewController: UITableViewController {
             let appVC = segue.destination as! AppsTableViewController
             
             appVC.categoryNumber = genreArray[indexPath.row]
+            appVC.appTitle = categoryArray[indexPath.row]
         }
         
     }

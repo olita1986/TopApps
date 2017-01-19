@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import AMScrollingNavbar
+
 
 class AppsTableViewController: UITableViewController {
 
+    //MARK: - Variables
     var categoryNumber = ""
     var urlArray = [String]()
     var nameArray = [String]()
@@ -19,6 +24,10 @@ class AppsTableViewController: UITableViewController {
     var rightArray = [String]()
     var releaseDateArray = [String]()
     var cache =  NSCache<AnyObject, UIImage>()
+    
+    var appTitle = ""
+    
+    @IBOutlet weak var titleLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,18 +41,81 @@ class AppsTableViewController: UITableViewController {
     
         let leftBarButton = UIBarButtonItem(title: "< Categories", style: .done, target: self, action: #selector(AppsTableViewController.performSegueFromApps))
         self.navigationItem.leftBarButtonItem = leftBarButton
+        
+        let imageView = UIImageView(image: UIImage(named: "background_1.jpg"))
+        imageView.alpha = 0.5
+        
+        imageView.contentMode = .scaleAspectFill
+         tableView.backgroundView = imageView
+        
+        setTitleLabel()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(AppsTableViewController.reachabilityChanged(note:)),name: ReachabilityChangedNotification,object: reachability)
+        do{
+            try reachability.startNotifier()
+        }catch{
+            print("could not start reachability notifier")
+        }
+        
+        
         NotificationCenter.default.post(name: ReachabilityChangedNotification, object: reachability)
         
+        if let navigationController = navigationController as? ScrollingNavigationController {
+            navigationController.followScrollView(tableView, delay: 50.0)
+        }
+      
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self)
+        
+        if let navigationController = navigationController as? ScrollingNavigationController {
+            navigationController.stopFollowingScrollView()
+        }
+    }
+    
+    func setTitleLabel () {
+        
+        titleLabel.text = self.appTitle
+        titleLabel.layer.cornerRadius = 7
+        titleLabel.layer.borderWidth = 2
+        titleLabel.layer.borderColor = UIColor.white.cgColor
+        titleLabel.clipsToBounds = true
+    }
+
     
     func performSegueFromApps () {
         
         performSegue(withIdentifier: "idFirstSegueUnwind", sender: self)
+    }
+    
+    // MARK: - Reachability for internet connection
+    
+    func reachabilityChanged(note: NSNotification) {
+        
+        let reachability = note.object as! Reachability
+        
+        if reachability.isReachable {
+            if reachability.isReachableViaWiFi {
+                print("Reachable via WiFi")
+            } else {
+                print("Reachable via Cellular")
+            }
+        } else {
+            
+            
+            //application.createAlert(title: "Oops!", message: "You don't have Internet connection!")
+            
+            print("No Connection")
+            createAlert(title: "Opps!", message: "You don't have Internet connection!")
+        }
     }
     
     func getTopApps (category: String) {
@@ -51,7 +123,7 @@ class AppsTableViewController: UITableViewController {
         cache.removeAllObjects()
         
         var string = ""
-        
+    
         if UIDevice.current.userInterfaceIdiom == .pad {
             
             string = "topfreeipadapplications"
@@ -63,107 +135,42 @@ class AppsTableViewController: UITableViewController {
         
         let url = URL(string:  "https://itunes.apple.com/us/rss/" + string + "/limit=25/genre=" + category + "/json")
         
-        let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
+        Alamofire.request(url!, method: .get, parameters: nil, encoding: JSONEncoding.default).validate().responseJSON { (response) in
             
-            if error != nil {
+            switch response.result {
                 
-                print(error)
+            case .success:
                 
-            } else {
+                let json = JSON(response.result.value as Any)
+    
                 
-                if let urlContent = data {
+                for item in json["feed"]["entry"].arrayValue {
                     
-                    do {
-                        
-                        
-                        // Extracting the result from json
-                        
-                        let jsonResult = try JSONSerialization.jsonObject(with: urlContent, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
-                        
-                        if let feed = jsonResult["feed"] as? NSDictionary, let entry = feed["entry"] as? NSArray {
-                            
-                            for app in entry  {
-                                
-                                if let app = app as? NSDictionary {
-                                    
-                                    if let title = app["im:name"] as? NSDictionary {
-                                        
-                                        if let name = title["label"] as? String {
-                                            
-                                            self.nameArray.append(name)
-                                        }
-                                        
-                                    }
-                                    
-                                    if let title = app["summary"] as? NSDictionary {
-                                        
-                                        if let name = title["label"] as? String {
-                                            
-                                            self.summaryArray.append(name)
-                                        }
-                                        
-                                    }
-                                    
-                                    if let title = app["im:artist"] as? NSDictionary {
-                                        
-                                        if let name = title["label"] as? String {
-                                            
-                                            self.artistArray.append(name)
-                                        }
-                                        
-                                    }
-                                    
-                                    if let title = app["rights"] as? NSDictionary {
-                                        
-                                        if let name = title["label"] as? String {
-                                            
-                                            self.rightArray.append(name)
-                                        }
-                                        
-                                    }
-                                    
-                                    if let category = app["im:releaseDate"] as? NSDictionary, let attributes = category["attributes"] as? NSDictionary, let label = attributes["label"] as? String {
-                                        
-                                        self.releaseDateArray.append(label)
-                                    }
-                                    
-                                    if let category = app["category"] as? NSDictionary, let attributes = category["attributes"] as? NSDictionary, let label = attributes["label"] as? String {
-                                        
-                                        self.categoryArray.append(label)
-                                    }
-                                    
-                                   
-                                    if let image = app["im:image"] as? NSArray {
-                                        
-                                        if let content = image[1] as? NSDictionary {
-                                            
-                                            if let imageURL = content["label"] as? String {
-                                                
-                                                self.urlArray.append(imageURL)
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                    } catch {
-                        
-                        
-                        
-                    }
-                    
-                    DispatchQueue.main.async() { () -> Void in
-                        
-                        self.tableView.reloadData()
-                    }
-
+                    print(item["im:name"]["label"].stringValue)
+                    self.nameArray.append(item["im:name"]["label"].stringValue)
+                    self.summaryArray.append(item["summary"]["label"].stringValue)
+                    self.artistArray.append(item["im:artist"]["label"].stringValue)
+                    self.rightArray.append(item["rights"]["label"].stringValue)
+                    self.releaseDateArray.append(item["im:releaseDate"]["attributes"]["label"].stringValue)
+                    self.categoryArray.append(item["category"]["attributes"]["label"].stringValue)
+                    self.urlArray.append(item["im:image"][1]["label"].stringValue)
                 }
+                DispatchQueue.main.async() { () -> Void in
+                    
+                    self.tableView.reloadData()
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-  
         }
-        task.resume()
-
+    }
+    
+    override func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
+        if let navigationController = navigationController as? ScrollingNavigationController {
+            navigationController.showNavbar(animated: true)
+        }
+        return true
     }
 
     override func didReceiveMemoryWarning() {
@@ -175,12 +182,23 @@ class AppsTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return urlArray.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return urlArray.count
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 5
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = UIColor.clear
+        
+        return headerView
     }
 
     
@@ -190,21 +208,21 @@ class AppsTableViewController: UITableViewController {
         // Configure the cell...
         
         
-        cell.appName.text = nameArray[indexPath.row]
+        cell.appName.text = nameArray[indexPath.section]
         
-        cell.categoryLabel.text = categoryArray[indexPath.row]
+        cell.categoryLabel.text = categoryArray[indexPath.section]
         
-        cell.rankLabel.text = "\(indexPath.row + 1)"
+        cell.rankLabel.text = "\(indexPath.section + 1)"
         
         
-        if let image = cache.object(forKey: indexPath.row as AnyObject) {
+        if let image = cache.object(forKey: indexPath.section as AnyObject) {
             
             cell.appImageView.image = image
             
         } else {
             
             
-            let url = URL(string: urlArray[indexPath.row])!
+            let url = URL(string: urlArray[indexPath.section])!
             
             let request = NSMutableURLRequest(url: url)
             let task = URLSession.shared.dataTask(with: request as URLRequest) {
@@ -220,7 +238,7 @@ class AppsTableViewController: UITableViewController {
                         
                         if let image = UIImage(data: data) {
                             
-                            self.cache.setObject(image, forKey: indexPath.row as AnyObject)
+                            self.cache.setObject(image, forKey: indexPath.section as AnyObject)
                           
                                 DispatchQueue.main.async() { () -> Void in
                                     
@@ -234,12 +252,45 @@ class AppsTableViewController: UITableViewController {
             task.resume()
 
         }
+        
+        cell.layer.cornerRadius = 8
+        cell.layer.borderColor = UIColor.lightGray.cgColor
+        cell.layer.borderWidth = 1
 
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        cell.alpha = 0
+        
+        let transform = CATransform3DTranslate(CATransform3DIdentity, -250, 20, 0)
+        
+        cell.layer.transform = transform
+        
+        UIView.animate(withDuration: 1) { 
+            cell.alpha = 1
+             cell.layer.transform = CATransform3DIdentity
+            
+        }
+    }
+    
     @IBAction func unwindFromDetail (_ sender: UIStoryboardSegue) {
         
+        
+    }
+    
+    // Helper method for creating alerts
+    
+    func createAlert (title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
         
     }
     
@@ -258,13 +309,13 @@ class AppsTableViewController: UITableViewController {
             
             let detailVC = segue.destination as! ViewController
             
-            detailVC.appName = nameArray[indexPath.row]
-            detailVC.rights = rightArray[indexPath.row]
-            detailVC.artist = artistArray[indexPath.row]
-            detailVC.category = categoryArray[indexPath.row]
-            detailVC.summary = summaryArray[indexPath.row]
-            detailVC.image = cache.object(forKey: indexPath.row as AnyObject)
-            detailVC.date = releaseDateArray[indexPath.row]
+            detailVC.appName = nameArray[indexPath.section]
+            detailVC.rights = rightArray[indexPath.section]
+            detailVC.artist = artistArray[indexPath.section]
+            detailVC.category = categoryArray[indexPath.section]
+            detailVC.summary = summaryArray[indexPath.section]
+            detailVC.image = cache.object(forKey: indexPath.section as AnyObject)
+            detailVC.date = releaseDateArray[indexPath.section]
             
         }
     }

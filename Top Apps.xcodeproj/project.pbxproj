@@ -26,9 +26,13 @@
 		C863EDA41D982A0500EBDBC5 /* SecondCustomSegueUnwind.swift in Sources */ = {isa = PBXBuildFile; fileRef = C863EDA31D982A0500EBDBC5 /* SecondCustomSegueUnwind.swift */; };
 		C863EDA61D989F9100EBDBC5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C863EDA51D989F9100EBDBC5 /* DetailViewController.swift */; };
 		C863EDA91D98AF2E00EBDBC5 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = C863EDA81D98AF2E00EBDBC5 /* Reachability.swift */; };
+		C89462191E3048610091148E /* background_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C89462181E3048610091148E /* background_1.jpg */; };
+		D414E5C9579A31D370E4C073 /* Pods_Top_Apps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23B0CFB5A095DA10B12E3A74 /* Pods_Top_Apps.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D1DD33F523481D8B64A0CA0 /* Pods-Top Apps.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Top Apps.release.xcconfig"; path = "Pods/Target Support Files/Pods-Top Apps/Pods-Top Apps.release.xcconfig"; sourceTree = "<group>"; };
+		23B0CFB5A095DA10B12E3A74 /* Pods_Top_Apps.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Top_Apps.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C834D82B1D9593C600B9E1AF /* Top Apps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Top Apps.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C834D82E1D9593C600B9E1AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C834D8301D9593C600B9E1AF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -50,6 +54,8 @@
 		C863EDA31D982A0500EBDBC5 /* SecondCustomSegueUnwind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondCustomSegueUnwind.swift; sourceTree = "<group>"; };
 		C863EDA51D989F9100EBDBC5 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		C863EDA81D98AF2E00EBDBC5 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		C89462181E3048610091148E /* background_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background_1.jpg; sourceTree = "<group>"; };
+		DD380A5731367A061A403C88 /* Pods-Top Apps.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Top Apps.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Top Apps/Pods-Top Apps.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +64,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C84B42151D9618D000C7231D /* CoreGraphics.framework in Frameworks */,
+				D414E5C9579A31D370E4C073 /* Pods_Top_Apps.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +79,7 @@
 				C834D82D1D9593C600B9E1AF /* Top Apps */,
 				C834D82C1D9593C600B9E1AF /* Products */,
 				C84B42131D9618D000C7231D /* Frameworks */,
+				E3231CAA3B1EEE1FE4098C1C /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -143,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				C84B42141D9618D000C7231D /* CoreGraphics.framework */,
+				23B0CFB5A095DA10B12E3A74 /* Pods_Top_Apps.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -150,9 +159,27 @@
 		C863EDA71D98AE7300EBDBC5 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				C89462171E30484F0091148E /* images */,
 				C863EDA81D98AF2E00EBDBC5 /* Reachability.swift */,
 			);
 			name = Helpers;
+			sourceTree = "<group>";
+		};
+		C89462171E30484F0091148E /* images */ = {
+			isa = PBXGroup;
+			children = (
+				C89462181E3048610091148E /* background_1.jpg */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
+		E3231CAA3B1EEE1FE4098C1C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DD380A5731367A061A403C88 /* Pods-Top Apps.debug.xcconfig */,
+				1D1DD33F523481D8B64A0CA0 /* Pods-Top Apps.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -162,9 +189,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C834D83D1D9593C700B9E1AF /* Build configuration list for PBXNativeTarget "Top Apps" */;
 			buildPhases = (
+				68A78526D4F50D0E4B9A4E08 /* [CP] Check Pods Manifest.lock */,
 				C834D8271D9593C600B9E1AF /* Sources */,
 				C834D8281D9593C600B9E1AF /* Frameworks */,
 				C834D8291D9593C600B9E1AF /* Resources */,
+				A60C0C710497209195A4D0ED /* [CP] Embed Pods Frameworks */,
+				65398EA60469E6E1E7570119 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -182,7 +212,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "orlando arzola";
 				TargetAttributes = {
 					C834D82A1D9593C600B9E1AF = {
@@ -218,12 +248,61 @@
 				C834D8391D9593C700B9E1AF /* LaunchScreen.storyboard in Resources */,
 				C834D8461D95A1CC00B9E1AF /* Default-568h@2x.png in Resources */,
 				C834D84A1D95CB9600B9E1AF /* iPadMain.storyboard in Resources */,
+				C89462191E3048610091148E /* background_1.jpg in Resources */,
 				C834D8361D9593C700B9E1AF /* Assets.xcassets in Resources */,
 				C834D8341D9593C700B9E1AF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		65398EA60469E6E1E7570119 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Top Apps/Pods-Top Apps-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		68A78526D4F50D0E4B9A4E08 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A60C0C710497209195A4D0ED /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Top Apps/Pods-Top Apps-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C834D8271D9593C600B9E1AF /* Sources */ = {
@@ -286,6 +365,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -335,6 +415,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -361,11 +442,12 @@
 		};
 		C834D83E1D9593C700B9E1AF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DD380A5731367A061A403C88 /* Pods-Top Apps.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = F4F2VWBSVP;
 				INFOPLIST_FILE = "Top Apps/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tipket.Top-Apps";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -376,11 +458,12 @@
 		};
 		C834D83F1D9593C700B9E1AF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1D1DD33F523481D8B64A0CA0 /* Pods-Top Apps.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = F4F2VWBSVP;
 				INFOPLIST_FILE = "Top Apps/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tipket.Top-Apps";
 				PRODUCT_NAME = "$(TARGET_NAME)";
