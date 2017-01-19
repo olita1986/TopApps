@@ -1,8 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="ipad9_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,22 +18,30 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_2.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="qg7-Np-Cru">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Apps" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EoQ-O6-2Gz">
+                                <rect key="frame" x="282.5" y="471.5" width="203" height="81"/>
+                                <color key="backgroundColor" red="0.61769628258475096" green="0.61042810198905806" blue="0.98081153631210327" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="203" id="GoT-LO-8hZ"/>
                                     <constraint firstAttribute="height" constant="81" id="JH4-jK-sai"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="PartyLetPlain" family="Party LET" pointSize="69"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="0.96429763481247721" green="0.98081153631210327" blue="0.92288769055884812" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.31047640894113471" green="1" blue="0.40817715296290646" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="qg7-Np-Cru" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="3On-ev-TMp"/>
+                            <constraint firstItem="qg7-Np-Cru" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="L26-Au-C5s"/>
                             <constraint firstItem="EoQ-O6-2Gz" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Xjr-IS-HfN"/>
+                            <constraint firstAttribute="trailing" secondItem="qg7-Np-Cru" secondAttribute="trailing" id="pgd-9C-GpV"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="qg7-Np-Cru" secondAttribute="bottom" id="sW4-xe-ujO"/>
                             <constraint firstItem="EoQ-O6-2Gz" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="uoM-1T-C8h"/>
                         </constraints>
                     </view>
@@ -40,4 +51,7 @@
             <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="background_2.jpg" width="640" height="1136"/>
+    </resources>
 </document>

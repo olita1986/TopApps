@@ -10,5 +10,8 @@ target 'Top Apps' do
 pod 'Alamofire', '~> 4.3'
 pod 'SwiftyJSON'
 pod 'AMScrollingNavbar'
+pod 'ReachabilitySwift', '~> 3'
+pod 'Cache'
+pod 'GuillotineMenu', '~> 3.0'
 
 end

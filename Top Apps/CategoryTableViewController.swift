@@ -7,21 +7,33 @@
 //
 
 import UIKit
-
-
+import ReachabilitySwift
+import AMScrollingNavbar
+import GuillotineMenu
 
 
 class CategoryTableViewController: UITableViewController {
     
     // Creacion de las categorias del App Store
     
-    let categoryArray = ["Books", "Business" , "Catalogues", "Education", "Entertainment" , "Finance", "Food & Drink", "Games", "Health & Fitness", "Lifestyle", "Magazines & Newspapers", "Medical", "Music", "Navigation", "News", "Photo & Video", "Productivity", "Reference", "Shopping", "Social Networking", "Sports", "Travel", "Utilities", "Weather" ]
+    let categoryArray = ["📙 Books", "📊 Business" , "📖 Catalogues", "🎓 Education","📺 Entertainment" , "💰 Finance", "🍕 Food & Drink", "🎮 Games", "💊 Health & Fitness", "🏄🏽 Lifestyle", "📰 Magazines & Newspapers", "💉 Medical", "🎤 Music", "🛳 Navigation", "🗞 News", "🎥 Photo & Video", "📈 Productivity", "📁 Reference", "🛍 Shopping", "👫 Social Networking", "🏀 Sports", "✈️ Travel", "⚒ Utilities", "☔️ Weather" ]
     
     // Creacion de los numero correspondientes a las categorias
     let genreArray = ["6018", "6000", "6022", "6017", "6016", "6015", "6023", "6014", "6013", "6012", "6020", "6011", "6010", "6009", "6021" , "6008", "6007", "6006","6024", "6005", "6004", "6003", "6002", "6001"]
+    
+     var timer = Timer()
+    
+    fileprivate lazy var presentationAnimator = GuillotineTransitionAnimation()
 
+    @IBOutlet weak var menuButton: UIBarButtonItem!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let imageView = UIImageView(image: UIImage(named: "background_2.jpg"))
+        imageView.alpha = 0.5
+        
+        imageView.contentMode = .scaleAspectFill
+        tableView.backgroundView = imageView
         
     }
     
@@ -36,29 +48,55 @@ class CategoryTableViewController: UITableViewController {
         }
         
         NotificationCenter.default.post(name: ReachabilityChangedNotification, object: reachability)
+        
+        if let navigationController = navigationController as? ScrollingNavigationController {
+            navigationController.followScrollView(tableView, delay: 50.0)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
+        
+        if let navigationController = navigationController as? ScrollingNavigationController {
+            navigationController.stopFollowingScrollView()
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
+        if let navigationController = navigationController as? ScrollingNavigationController {
+            navigationController.showNavbar(animated: true)
+        }
+        return true
+    }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return categoryArray.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return categoryArray.count
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 5
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = UIColor.clear
+        
+        return headerView
     }
 
     
@@ -67,7 +105,24 @@ class CategoryTableViewController: UITableViewController {
 
         // Configure the cell...
         
-        cell.textLabel?.text = categoryArray[indexPath.row]
+        cell.textLabel?.text = categoryArray[indexPath.section]
+        
+        cell.textLabel?.textAlignment = .center
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            
+             cell.textLabel?.font = UIFont(name: "Avenir", size: 40)
+            
+        } else {
+            
+             cell.textLabel?.font = UIFont(name: "Avenir", size: 20)
+        }
+        
+       
+        
+        cell.layer.cornerRadius = 8
+        cell.layer.borderColor = UIColor.lightGray.cgColor
+        cell.layer.borderWidth = 1
 
         return cell
     }
@@ -86,7 +141,7 @@ class CategoryTableViewController: UITableViewController {
             
             let appVC = segue.destination as! AppCollectionViewController
             
-            appVC.categoryNumber = genreArray[indexPath.row]
+            appVC.categoryNumber = genreArray[indexPath.section]
             
         } else {
             
@@ -94,8 +149,8 @@ class CategoryTableViewController: UITableViewController {
             
             let appVC = segue.destination as! AppsTableViewController
             
-            appVC.categoryNumber = genreArray[indexPath.row]
-            appVC.appTitle = categoryArray[indexPath.row]
+            appVC.categoryNumber = genreArray[indexPath.section]
+            appVC.appTitle = categoryArray[indexPath.section]
         }
         
     }
@@ -122,9 +177,15 @@ class CategoryTableViewController: UITableViewController {
             
             //application.createAlert(title: "Oops!", message: "You don't have Internet connection!")
             
-            print("No Connection")
-            createAlert(title: "Opps!", message: "You don't have Internet connection!")
+            self.perform(#selector(CategoryTableViewController.alert), with: nil, afterDelay: 1)
+            
         }
+    }
+    
+    func alert() {
+        
+        createAlert(title: "Opps!", message: "You don't have Internet connection!")
+        
     }
     
     // Helper method for creating alerts
@@ -141,8 +202,38 @@ class CategoryTableViewController: UITableViewController {
         
     }
     
-    
-    
-    
 
+    @IBAction func showMenu2(_ sender: Any) {
+        setUpMenu()
+    }
+    @IBAction func showMenu(_ sender: Any) {
+        
+       setUpMenu()
+    }
+    
+    func setUpMenu () {
+        let menuViewController = storyboard!.instantiateViewController(withIdentifier: "guillotineMenu") as! MenuViewController
+        menuViewController.modalPresentationStyle = .custom
+        menuViewController.transitioningDelegate = self
+        
+        presentationAnimator.animationDelegate = menuViewController
+        
+        presentationAnimator.animationDuration = 0.5
+        presentationAnimator.supportView = navigationController!.navigationBar
+        present(menuViewController, animated: true, completion: nil)
+    }
+
+}
+
+extension CategoryTableViewController: UIViewControllerTransitioningDelegate {
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        presentationAnimator.mode = .presentation
+        return presentationAnimator
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        presentationAnimator.mode = .dismissal
+        return presentationAnimator
+    }
 }

@@ -71,9 +71,6 @@ public class Reachability {
     public var whenReachable: NetworkReachable?
     public var whenUnreachable: NetworkUnreachable?
     public var reachableOnWWAN: Bool
-    
-    // The notification center on which "reachability changed" events are being posted
-    public var notificationCenter: NotificationCenter = NotificationCenter.default
 
     public var currentReachabilityString: String {
         return "\(currentReachabilityStatus)"
@@ -239,7 +236,7 @@ fileprivate extension Reachability {
         let block = isReachable ? whenReachable : whenUnreachable
         block?(self)
         
-        self.notificationCenter.post(name: ReachabilityChangedNotification, object:self)
+        NotificationCenter.default.post(name: ReachabilityChangedNotification, object:self)
         
         previousFlags = flags
     }

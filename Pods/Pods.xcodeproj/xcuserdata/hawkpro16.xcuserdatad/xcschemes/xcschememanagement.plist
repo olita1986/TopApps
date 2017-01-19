@@ -14,7 +14,27 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Cache.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>CryptoSwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>GuillotineMenu.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Top Apps.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>ReachabilitySwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -27,6 +47,21 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>1A5B7365CE37F1C975B8BB03C9BA2A20</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2637C02A9FA946061714A669B4162D08</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>52E01E9DAAF0703F002F58E870E69E93</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>536B9F35AFF1A6725F02302B5F55F59B</key>
 		<dict>
 			<key>primary</key>
@@ -37,12 +72,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A7B01877F18B088F76B33F1701189AA6</key>
+		<key>87A44734D3DF04B37F2D2527744645DE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DE0E04DA59DBBF798A24D6918ED30B31</key>
+		<key>D37100535A65201CBF527FDBE5EF6996</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EFACE05A9F3E7D7EAE3A2BDD90DF3630</key>
 		<dict>
 			<key>primary</key>
 			<true/>

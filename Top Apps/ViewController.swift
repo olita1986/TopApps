@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReachabilitySwift
 
 class ViewController: UIViewController {
     
@@ -53,6 +54,8 @@ class ViewController: UIViewController {
         
         animations()
         
+    
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -91,13 +94,16 @@ class ViewController: UIViewController {
         } else {
             
             
-            //application.createAlert(title: "Oops!", message: "You don't have Internet connection!")
+            self.perform(#selector(ViewController.alert), with: nil, afterDelay: 1)
             
-            print("No Connection")
-            createAlert(title: "Opps!", message: "You don't have Internet connection!")
         }
     }
     
+    func alert() {
+        
+        createAlert(title: "Opps!", message: "You don't have Internet connection!")
+        
+    }
     
     func performSegueFromDetails () {
         
@@ -148,11 +154,6 @@ class ViewController: UIViewController {
             self.descriptionLabel.alpha = 1
             self.releaseDateLabel.alpha = 1
         })
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // Helper method for creating alerts

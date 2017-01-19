@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReachabilitySwift
 
 class DetailViewController: UIViewController {
     
@@ -58,7 +59,22 @@ class DetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(AppCollectionViewController.reachabilityChanged(note:)),name: ReachabilityChangedNotification,object: reachability)
+        do{
+            try reachability.startNotifier()
+        }catch{
+            print("could not start reachability notifier")
+        }
+        
+        
         NotificationCenter.default.post(name: ReachabilityChangedNotification, object: reachability)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self)
+        
     }
     
     func performSegueFromDetails () {
@@ -116,6 +132,49 @@ class DetailViewController: UIViewController {
             self.releaseLabel.alpha = 1
         })
     }
+    
+    // MARK: - Reachability for internet connection
+    
+    func reachabilityChanged(note: NSNotification) {
+        
+        let reachability = note.object as! Reachability
+        
+        if reachability.isReachable {
+            if reachability.isReachableViaWiFi {
+                print("Reachable via WiFi")
+            } else {
+                print("Reachable via Cellular")
+            }
+        } else {
+            
+            
+            //application.createAlert(title: "Oops!", message: "You don't have Internet connection!")
+            
+            self.perform(#selector(AppCollectionViewController.alert), with: nil, afterDelay: 1)
+            
+        }
+    }
+    
+    func alert() {
+        
+        createAlert(title: "Opps!", message: "You don't have Internet connection!")
+        
+    }
+    
+    // Helper method for creating alerts
+    
+    func createAlert (title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+
     
 
 

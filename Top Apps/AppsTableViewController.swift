@@ -10,7 +10,8 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import AMScrollingNavbar
-
+import ReachabilitySwift
+import Cache
 
 class AppsTableViewController: UITableViewController {
 
@@ -27,7 +28,11 @@ class AppsTableViewController: UITableViewController {
     
     var appTitle = ""
     
+    let hybridCache = HybridCache(name: "Mix")
+    
     @IBOutlet weak var titleLabel: UILabel!
+    
+    //MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,102 +86,6 @@ class AppsTableViewController: UITableViewController {
         }
     }
     
-    func setTitleLabel () {
-        
-        titleLabel.text = self.appTitle
-        titleLabel.layer.cornerRadius = 7
-        titleLabel.layer.borderWidth = 2
-        titleLabel.layer.borderColor = UIColor.white.cgColor
-        titleLabel.clipsToBounds = true
-    }
-
-    
-    func performSegueFromApps () {
-        
-        performSegue(withIdentifier: "idFirstSegueUnwind", sender: self)
-    }
-    
-    // MARK: - Reachability for internet connection
-    
-    func reachabilityChanged(note: NSNotification) {
-        
-        let reachability = note.object as! Reachability
-        
-        if reachability.isReachable {
-            if reachability.isReachableViaWiFi {
-                print("Reachable via WiFi")
-            } else {
-                print("Reachable via Cellular")
-            }
-        } else {
-            
-            
-            //application.createAlert(title: "Oops!", message: "You don't have Internet connection!")
-            
-            print("No Connection")
-            createAlert(title: "Opps!", message: "You don't have Internet connection!")
-        }
-    }
-    
-    func getTopApps (category: String) {
-        
-        cache.removeAllObjects()
-        
-        var string = ""
-    
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            
-            string = "topfreeipadapplications"
-            
-        } else {
-            
-            string = "topfreeapplications"
-        }
-        
-        let url = URL(string:  "https://itunes.apple.com/us/rss/" + string + "/limit=25/genre=" + category + "/json")
-        
-        Alamofire.request(url!, method: .get, parameters: nil, encoding: JSONEncoding.default).validate().responseJSON { (response) in
-            
-            switch response.result {
-                
-            case .success:
-                
-                let json = JSON(response.result.value as Any)
-    
-                
-                for item in json["feed"]["entry"].arrayValue {
-                    
-                    print(item["im:name"]["label"].stringValue)
-                    self.nameArray.append(item["im:name"]["label"].stringValue)
-                    self.summaryArray.append(item["summary"]["label"].stringValue)
-                    self.artistArray.append(item["im:artist"]["label"].stringValue)
-                    self.rightArray.append(item["rights"]["label"].stringValue)
-                    self.releaseDateArray.append(item["im:releaseDate"]["attributes"]["label"].stringValue)
-                    self.categoryArray.append(item["category"]["attributes"]["label"].stringValue)
-                    self.urlArray.append(item["im:image"][1]["label"].stringValue)
-                }
-                DispatchQueue.main.async() { () -> Void in
-                    
-                    self.tableView.reloadData()
-                }
-                
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
-    override func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
-        if let navigationController = navigationController as? ScrollingNavigationController {
-            navigationController.showNavbar(animated: true)
-        }
-        return true
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     // MARK: - Table view data source
 
@@ -215,7 +124,7 @@ class AppsTableViewController: UITableViewController {
         cell.rankLabel.text = "\(indexPath.section + 1)"
         
         
-        if let image = cache.object(forKey: indexPath.section as AnyObject) {
+        if let image = cache.object(forKey: self.categoryNumber + "\(indexPath.section)" as AnyObject) {
             
             cell.appImageView.image = image
             
@@ -230,7 +139,7 @@ class AppsTableViewController: UITableViewController {
                 
                 if error != nil {
                     
-                    print(error)
+                    print(error as Any)
                     
                 } else {
                     
@@ -238,7 +147,7 @@ class AppsTableViewController: UITableViewController {
                         
                         if let image = UIImage(data: data) {
                             
-                            self.cache.setObject(image, forKey: indexPath.section as AnyObject)
+                            self.cache.setObject(image, forKey: self.categoryNumber + "\(indexPath.section)" as AnyObject)
                           
                                 DispatchQueue.main.async() { () -> Void in
                                     
@@ -280,7 +189,35 @@ class AppsTableViewController: UITableViewController {
         
     }
     
-    // Helper method for creating alerts
+    // MARK: - Reachability for internet connection
+    
+    func reachabilityChanged(note: NSNotification) {
+        
+        let reachability = note.object as! Reachability
+        
+        if reachability.isReachable {
+            if reachability.isReachableViaWiFi {
+                print("Reachable via WiFi")
+            } else {
+                print("Reachable via Cellular")
+            }
+        } else {
+            
+            
+            //application.createAlert(title: "Oops!", message: "You don't have Internet connection!")
+            
+            self.perform(#selector(AppsTableViewController.alert), with: nil, afterDelay: 1)
+            
+        }
+    }
+    
+    func alert() {
+        
+        createAlert(title: "Opps!", message: "You don't have Internet connection!")
+        
+    }
+    
+    // MARK: - Helper method for creating alerts
     
     func createAlert (title: String, message: String) {
         
@@ -292,6 +229,104 @@ class AppsTableViewController: UITableViewController {
         
         self.present(alert, animated: true, completion: nil)
         
+    }
+    
+    func setTitleLabel () {
+        
+        titleLabel.text = self.appTitle
+        titleLabel.layer.cornerRadius = 7
+        titleLabel.layer.borderWidth = 2
+        titleLabel.layer.borderColor = UIColor.white.cgColor
+        titleLabel.clipsToBounds = true
+    }
+    
+    
+    func performSegueFromApps () {
+        
+        performSegue(withIdentifier: "idFirstSegueUnwind", sender: self)
+    }
+    
+    func getTopApps (category: String) {
+        
+        hybridCache.object(category) { (json: JSON2?) in
+            
+            if json != nil {
+                
+                let json1 = JSON(json?.object ?? "hola")
+                
+                for item in json1.arrayValue {
+                    
+                    self.nameArray.append(item["im:name"]["label"].stringValue)
+                    self.summaryArray.append(item["summary"]["label"].stringValue)
+                    self.artistArray.append(item["im:artist"]["label"].stringValue)
+                    self.rightArray.append(item["rights"]["label"].stringValue)
+                    self.releaseDateArray.append(item["im:releaseDate"]["attributes"]["label"].stringValue)
+                    self.categoryArray.append(item["category"]["attributes"]["label"].stringValue)
+                    self.urlArray.append(item["im:image"][1]["label"].stringValue)
+                }
+                
+                DispatchQueue.main.async() { () -> Void in
+                    
+                    self.tableView.reloadData()
+                }
+            } else {
+                
+                var string = ""
+                
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    
+                    string = "topfreeipadapplications"
+                    
+                } else {
+                    
+                    string = "topfreeapplications"
+                }
+                
+                let url = URL(string:  "https://itunes.apple.com/us/rss/" + string + "/limit=25/genre=" + category + "/json")
+                
+                Alamofire.request(url!, method: .get, parameters: nil, encoding: JSONEncoding.default).validate().responseJSON { (response) in
+                    
+                    switch response.result {
+                        
+                    case .success:
+                        
+                        let json = JSON(response.result.value as Any)
+                        
+                        self.hybridCache.add(category, object: JSON2.array(json["feed"]["entry"].arrayObject!))
+                        
+                        
+                        for item in json["feed"]["entry"].arrayValue {
+                            
+                            self.nameArray.append(item["im:name"]["label"].stringValue)
+                            self.summaryArray.append(item["summary"]["label"].stringValue)
+                            self.artistArray.append(item["im:artist"]["label"].stringValue)
+                            self.rightArray.append(item["rights"]["label"].stringValue)
+                            self.releaseDateArray.append(item["im:releaseDate"]["attributes"]["label"].stringValue)
+                            self.categoryArray.append(item["category"]["attributes"]["label"].stringValue)
+                            self.urlArray.append(item["im:image"][1]["label"].stringValue)
+                        }
+                        DispatchQueue.main.async() { () -> Void in
+                            
+                            self.tableView.reloadData()
+                        }
+                        
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+                
+            }
+            
+        }
+        
+        
+    }
+    
+    override func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
+        if let navigationController = navigationController as? ScrollingNavigationController {
+            navigationController.showNavbar(animated: true)
+        }
+        return true
     }
     
 
@@ -314,7 +349,7 @@ class AppsTableViewController: UITableViewController {
             detailVC.artist = artistArray[indexPath.section]
             detailVC.category = categoryArray[indexPath.section]
             detailVC.summary = summaryArray[indexPath.section]
-            detailVC.image = cache.object(forKey: indexPath.section as AnyObject)
+            detailVC.image = cache.object(forKey: self.categoryNumber + "\(indexPath.section)" as AnyObject)
             detailVC.date = releaseDateArray[indexPath.section]
             
         }

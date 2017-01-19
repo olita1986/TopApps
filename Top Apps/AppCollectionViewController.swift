@@ -7,6 +7,11 @@
 //
 
 import UIKit
+import ReachabilitySwift
+import SwiftyJSON
+import Alamofire
+import Cache
+
 
 private let reuseIdentifier = "Cell"
 
@@ -23,6 +28,8 @@ class AppCollectionViewController: UICollectionViewController {
     var rightArray = [String]()
     var releaseDateArray = [String]()
     var cache =  NSCache<AnyObject, UIImage>()
+    
+    let hybridCache = HybridCache(name: "Mix")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +51,50 @@ class AppCollectionViewController: UICollectionViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(AppCollectionViewController.reachabilityChanged(note:)),name: ReachabilityChangedNotification,object: reachability)
+        do{
+            try reachability.startNotifier()
+        }catch{
+            print("could not start reachability notifier")
+        }
+        
+        
         NotificationCenter.default.post(name: ReachabilityChangedNotification, object: reachability)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self)
+        
+    }
+    
+    // MARK: - Reachability for internet connection
+    
+    func reachabilityChanged(note: NSNotification) {
+        
+        let reachability = note.object as! Reachability
+        
+        if reachability.isReachable {
+            if reachability.isReachableViaWiFi {
+                print("Reachable via WiFi")
+            } else {
+                print("Reachable via Cellular")
+            }
+        } else {
+            
+            
+            //application.createAlert(title: "Oops!", message: "You don't have Internet connection!")
+            
+            self.perform(#selector(AppCollectionViewController.alert), with: nil, afterDelay: 1)
+            
+        }
+    }
+    
+    func alert() {
+        
+        createAlert(title: "Opps!", message: "You don't have Internet connection!")
+        
     }
     
     func performSegueFromApps () {
@@ -55,120 +105,77 @@ class AppCollectionViewController: UICollectionViewController {
     
     func getTopApps (category: String) {
         
-        cache.removeAllObjects()
         
-        var string = ""
-        
-        if UIDevice.current.userInterfaceIdiom == .pad {
+        hybridCache.object(category) { (json: JSON2?) in
             
-            string = "topfreeipadapplications"
-            
-        } else {
-            
-            string = "topfreeapplications"
-        }
-        
-        let url = URL(string:  "https://itunes.apple.com/us/rss/" + string + "/limit=25/genre=" + category + "/json")
-        
-        let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
-            
-            if error != nil {
+            if json != nil {
                 
-                print(error)
+                let json1 = JSON(json?.object ?? "hola")
                 
+                for item in json1.arrayValue {
+                    
+                    self.nameArray.append(item["im:name"]["label"].stringValue)
+                    self.summaryArray.append(item["summary"]["label"].stringValue)
+                    self.artistArray.append(item["im:artist"]["label"].stringValue)
+                    self.rightArray.append(item["rights"]["label"].stringValue)
+                    self.releaseDateArray.append(item["im:releaseDate"]["attributes"]["label"].stringValue)
+                    self.categoryArray.append(item["category"]["attributes"]["label"].stringValue)
+                    self.urlArray.append(item["im:image"][1]["label"].stringValue)
+                }
+                
+                DispatchQueue.main.async() { () -> Void in
+                    
+                    self.collectionView?.reloadData()
+                }
             } else {
                 
-                if let urlContent = data {
+                var string = ""
+                
+                if UIDevice.current.userInterfaceIdiom == .pad {
                     
-                    do {
+                    string = "topfreeipadapplications"
+                    
+                } else {
+                    
+                    string = "topfreeapplications"
+                }
+                
+                let url = URL(string:  "https://itunes.apple.com/us/rss/" + string + "/limit=25/genre=" + category + "/json")
+                
+                Alamofire.request(url!, method: .get, parameters: nil, encoding: JSONEncoding.default).validate().responseJSON { (response) in
+                    
+                    switch response.result {
+                        
+                    case .success:
+                        
+                        let json = JSON(response.result.value as Any)
+                        
+                        self.hybridCache.add(category, object: JSON2.array(json["feed"]["entry"].arrayObject!))
                         
                         
-                        // Extracting the result from the json 
-                        let jsonResult = try JSONSerialization.jsonObject(with: urlContent, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
-                        
-                        if let feed = jsonResult["feed"] as? NSDictionary, let entry = feed["entry"] as? NSArray {
+                        for item in json["feed"]["entry"].arrayValue {
                             
-                            for app in entry  {
-                                
-                                if let app = app as? NSDictionary {
-                                    
-                                    if let title = app["im:name"] as? NSDictionary {
-                                        
-                                        if let name = title["label"] as? String {
-                                            
-                                            self.nameArray.append(name)
-                                        }
-                                        
-                                    }
-                                    
-                                    if let category = app["category"] as? NSDictionary, let attributes = category["attributes"] as? NSDictionary, let label = attributes["label"] as? String {
-                                        
-                                        self.categoryArray.append(label)
-                                    }
-                                    
-                                    
-                                    if let image = app["im:image"] as? NSArray {
-                                        
-                                        if let content = image[1] as? NSDictionary {
-                                            
-                                            if let imageURL = content["label"] as? String {
-                                                
-                                                self.urlArray.append(imageURL)
-                                            }
-                                        }
-                                    }
-                                    
-                                    if let title = app["summary"] as? NSDictionary {
-                                        
-                                        if let name = title["label"] as? String {
-                                            
-                                            self.summaryArray.append(name)
-                                        }
-                                        
-                                    }
-                                    
-                                    if let title = app["im:artist"] as? NSDictionary {
-                                        
-                                        if let name = title["label"] as? String {
-                                            
-                                            self.artistArray.append(name)
-                                        }
-                                        
-                                    }
-                                    
-                                    if let title = app["rights"] as? NSDictionary {
-                                        
-                                        if let name = title["label"] as? String {
-                                            
-                                            self.rightArray.append(name)
-                                        }
-                                        
-                                    }
-                                    
-                                    if let category = app["im:releaseDate"] as? NSDictionary, let attributes = category["attributes"] as? NSDictionary, let label = attributes["label"] as? String {
-                                        
-                                        self.releaseDateArray.append(label)
-                                    }
-                                }
-                            }
+                            self.nameArray.append(item["im:name"]["label"].stringValue)
+                            self.summaryArray.append(item["summary"]["label"].stringValue)
+                            self.artistArray.append(item["im:artist"]["label"].stringValue)
+                            self.rightArray.append(item["rights"]["label"].stringValue)
+                            self.releaseDateArray.append(item["im:releaseDate"]["attributes"]["label"].stringValue)
+                            self.categoryArray.append(item["category"]["attributes"]["label"].stringValue)
+                            self.urlArray.append(item["im:image"][1]["label"].stringValue)
+                        }
+                        DispatchQueue.main.async() { () -> Void in
+                            
+                            self.collectionView?.reloadData()
                         }
                         
-                    } catch {
-                        
-                        
-                        
+                    case .failure(let error):
+                        print(error.localizedDescription)
                     }
-                    
-                    DispatchQueue.main.async() { () -> Void in
-                        
-                        self.collectionView?.reloadData()
-                    }
-                    
                 }
+                
             }
             
         }
-        task.resume()
         
     }
 
@@ -191,6 +198,10 @@ class AppCollectionViewController: UICollectionViewController {
         // #warning Incomplete implementation, return the number of items
         return urlArray.count
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+    }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! AppCollectionViewCell
@@ -210,7 +221,7 @@ class AppCollectionViewController: UICollectionViewController {
         cell.appImageView.clipsToBounds = true
         
         
-        if let image = cache.object(forKey: indexPath.row as AnyObject) {
+        if let image = cache.object(forKey: self.categoryNumber + "\(indexPath.row)" as AnyObject) {
             
             cell.appImageView.image = image
             
@@ -225,7 +236,7 @@ class AppCollectionViewController: UICollectionViewController {
                 
                 if error != nil {
                     
-                    print(error)
+                    print(error as Any)
                     
                 } else {
                     
@@ -233,7 +244,7 @@ class AppCollectionViewController: UICollectionViewController {
                         
                         if let image = UIImage(data: data) {
                             
-                            self.cache.setObject(image, forKey: indexPath.row as AnyObject)
+                            self.cache.setObject(image, forKey: self.categoryNumber + "\(indexPath.row)" as AnyObject)
                             
                             DispatchQueue.main.async() { () -> Void in
                                 
@@ -267,6 +278,20 @@ class AppCollectionViewController: UICollectionViewController {
         
     }
     
+    // Helper method for creating alerts
+    
+    func createAlert (title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
 
     // MARK: - Navigation
     
@@ -277,8 +302,6 @@ class AppCollectionViewController: UICollectionViewController {
         
             let indexPath = collectionView?.indexPath(for: sender as! UICollectionViewCell)
 
-
-            print(indexPath?.row)
             
             let detailVC = segue.destination as! DetailViewController
             
@@ -287,7 +310,7 @@ class AppCollectionViewController: UICollectionViewController {
             detailVC.artist = artistArray[(indexPath?.row)!]
             detailVC.category = categoryArray[(indexPath?.row)!]
             detailVC.summary = summaryArray[(indexPath?.row)!]
-            detailVC.image = cache.object(forKey: (indexPath?.row)! as AnyObject)
+            detailVC.image = cache.object(forKey: self.categoryNumber + "\(indexPath?.row)" as AnyObject)
             detailVC.date = releaseDateArray[(indexPath?.row)!]
             
         }
