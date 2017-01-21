@@ -11,15 +11,16 @@ import ReachabilitySwift
 import SwiftyJSON
 import Alamofire
 import Cache
-
+import NVActivityIndicatorView
 
 
 private let reuseIdentifier = "Cell"
 
 class AppCollectionViewController: UICollectionViewController {
     
-    var indexPathRow = 0
     
+    //MARK: - Variables
+    var indexPathRow = 0
     var categoryNumber = ""
     var appTitle = ""
     var urlArray = [String]()
@@ -33,8 +34,12 @@ class AppCollectionViewController: UICollectionViewController {
     
     let hybridCache = HybridCache(name: "Mix")
     
-  
-
+    var activityIndicator: NVActivityIndicatorView?
+    var activityIndicator2: NVActivityIndicatorView?
+ 
+    
+    //MARK: - Lifecycle methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -68,140 +73,23 @@ class AppCollectionViewController: UICollectionViewController {
         
         
         NotificationCenter.default.post(name: ReachabilityChangedNotification, object: reachability)
+        
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.alpha = 0
+        
+        UIView.animate(withDuration: 0.5) {
+            self.navigationController?.navigationBar.alpha = 1
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
+        self.navigationController?.navigationBar.isHidden = true
         
     }
     
- 
-    func setLayOut () {
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left:50, bottom: 10, right: 50)
-        layout.itemSize = CGSize(width: 263, height: 157)
-        layout.minimumInteritemSpacing = 20
-        layout.minimumLineSpacing = 20
-        layout.headerReferenceSize = CGSize(width: self.view.bounds.width, height: 156)
-        
-        collectionView!.collectionViewLayout = layout
-    }
-    
-    // MARK: - Reachability for internet connection
-    
-    func reachabilityChanged(note: NSNotification) {
-        
-        let reachability = note.object as! Reachability
-        
-        if reachability.isReachable {
-            if reachability.isReachableViaWiFi {
-                print("Reachable via WiFi")
-            } else {
-                print("Reachable via Cellular")
-            }
-        } else {
-            
-            
-            //application.createAlert(title: "Oops!", message: "You don't have Internet connection!")
-            
-            self.perform(#selector(AppCollectionViewController.alert), with: nil, afterDelay: 1)
-            
-        }
-    }
-    
-    func alert() {
-        
-        createAlert(title: "Opps!", message: "You don't have Internet connection!")
-        
-    }
-    
-    func performSegueFromApps () {
-        
-        performSegue(withIdentifier: "idFirstSegueUnwind", sender: self)
-    }
-    
-    
-    func getTopApps (category: String) {
-        
-       
-        
-        hybridCache.object(category) { (json: JSON2?) in
-            
-            if json != nil {
-                
-                let json1 = JSON(json?.object ?? "hola")
-                
-                for item in json1.arrayValue {
-                    
-                    self.nameArray.append(item["im:name"]["label"].stringValue)
-                    self.summaryArray.append(item["summary"]["label"].stringValue)
-                    self.artistArray.append(item["im:artist"]["label"].stringValue)
-                    self.rightArray.append(item["rights"]["label"].stringValue)
-                    self.releaseDateArray.append(item["im:releaseDate"]["attributes"]["label"].stringValue)
-                    self.categoryArray.append(item["category"]["attributes"]["label"].stringValue)
-                    self.urlArray.append(item["im:image"][1]["label"].stringValue)
-                }
-                
-                DispatchQueue.main.async() { () -> Void in
-                    
-                    self.collectionView?.reloadData()
-                }
-            } else {
-                
-           
-                var string = ""
-                
-                if UIDevice.current.userInterfaceIdiom == .pad {
-                    
-                    string = "topfreeipadapplications"
-                    
-                } else {
-                    
-                    string = "topfreeapplications"
-                }
-                
-                let url = URL(string:  "https://itunes.apple.com/us/rss/" + string + "/limit=25/genre=" + category + "/json")
-                
-                Alamofire.request(url!, method: .get, parameters: nil, encoding: JSONEncoding.default).validate().responseJSON { (response) in
-                    
-                    switch response.result {
-                        
-                    case .success:
-                        
-                        let json = JSON(response.result.value as Any)
-                        
-                        self.hybridCache.add(category, object: JSON2.array(json["feed"]["entry"].arrayObject!))
-                        
-                        
-                        for item in json["feed"]["entry"].arrayValue {
-                            
-                            self.nameArray.append(item["im:name"]["label"].stringValue)
-                            self.summaryArray.append(item["summary"]["label"].stringValue)
-                            self.artistArray.append(item["im:artist"]["label"].stringValue)
-                            self.rightArray.append(item["rights"]["label"].stringValue)
-                            self.releaseDateArray.append(item["im:releaseDate"]["attributes"]["label"].stringValue)
-                            self.categoryArray.append(item["category"]["attributes"]["label"].stringValue)
-                            self.urlArray.append(item["im:image"][1]["label"].stringValue)
-                        }
-                        DispatchQueue.main.async() { () -> Void in
-                            
-                            self.collectionView?.reloadData()
-                     
-                        }
-                        
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                    }
-                }
-                
-            }
-            
-        }
-        
-    }
-
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -245,7 +133,9 @@ class AppCollectionViewController: UICollectionViewController {
         case UICollectionElementKindSectionHeader:
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as! AppCollectionReusableView
             
-            headerView.titleLabel.text = self.title
+            headerView.titleLabel.text = self.appTitle
+            self.activityIndicator =  headerView.activityIndicator
+            self.activityIndicator2 = headerView.activityIndicator2
             
             return headerView
             
@@ -270,7 +160,7 @@ class AppCollectionViewController: UICollectionViewController {
             
             cell.appImageView.image = image
             
-           // print(image)
+        
             
         } else {
             
@@ -315,14 +205,20 @@ class AppCollectionViewController: UICollectionViewController {
         return cell
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    // MARK: - CollectionView Layout
+    func setLayOut () {
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left:50, bottom: 10, right: 50)
+        layout.itemSize = CGSize(width: 263, height: 157)
+        layout.minimumInteritemSpacing = 20
+        layout.minimumLineSpacing = 20
+        layout.headerReferenceSize = CGSize(width: self.view.bounds.width, height: 156)
         
-        //indexPathRow = indexPath.row
-        
-        //print(indexPath.row)
-        
+        collectionView!.collectionViewLayout = layout
     }
     
+
+
     // action for unwind custom segue
 
     @IBAction func unwindFromDetail (_ sender: UIStoryboardSegue) {
@@ -330,7 +226,7 @@ class AppCollectionViewController: UICollectionViewController {
         
     }
     
-    // Helper method for creating alerts
+    // MARK: - Helper methods
     
     func createAlert (title: String, message: String) {
         
@@ -344,6 +240,124 @@ class AppCollectionViewController: UICollectionViewController {
         
     }
     
+    // Reachability for internet connection
+    
+    func reachabilityChanged(note: NSNotification) {
+        
+        let reachability = note.object as! Reachability
+        
+        if reachability.isReachable {
+            if reachability.isReachableViaWiFi {
+                print("Reachable via WiFi")
+            } else {
+                print("Reachable via Cellular")
+            }
+        } else {
+            
+            
+            //application.createAlert(title: "Oops!", message: "You don't have Internet connection!")
+            
+            self.perform(#selector(AppCollectionViewController.alert), with: nil, afterDelay: 1)
+            
+        }
+    }
+    
+    func alert() {
+        
+        createAlert(title: "Opps!", message: "You don't have Internet connection!")
+        
+    }
+    
+    
+    // API Request
+    
+    func getTopApps (category: String) {
+        
+        
+        
+        hybridCache.object(category) { (json: JSON2?) in
+            
+            if json != nil {
+                
+                let json1 = JSON(json?.object ?? "hola")
+                
+                for item in json1.arrayValue {
+                    
+                    self.nameArray.append(item["im:name"]["label"].stringValue)
+                    self.summaryArray.append(item["summary"]["label"].stringValue)
+                    self.artistArray.append(item["im:artist"]["label"].stringValue)
+                    self.rightArray.append(item["rights"]["label"].stringValue)
+                    self.releaseDateArray.append(item["im:releaseDate"]["attributes"]["label"].stringValue)
+                    self.categoryArray.append(item["category"]["attributes"]["label"].stringValue)
+                    self.urlArray.append(item["im:image"][1]["label"].stringValue)
+                }
+                
+                DispatchQueue.main.async() { () -> Void in
+                    
+                    self.collectionView?.reloadData()
+                }
+            } else {
+                
+                
+                var string = ""
+                
+                self.activityIndicator?.type = .audioEqualizer
+                self.activityIndicator2?.type = .audioEqualizer
+                
+                self.activityIndicator?.startAnimating()
+                self.activityIndicator2?.startAnimating()
+                
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    
+                    string = "topfreeipadapplications"
+                    
+                } else {
+                    
+                    string = "topfreeapplications"
+                }
+                
+                let url = URL(string:  "https://itunes.apple.com/us/rss/" + string + "/limit=25/genre=" + category + "/json")
+                
+                Alamofire.request(url!, method: .get, parameters: nil, encoding: JSONEncoding.default).validate().responseJSON { (response) in
+                    
+                    switch response.result {
+                        
+                    case .success:
+                        
+                        let json = JSON(response.result.value as Any)
+                        
+                        self.hybridCache.add(category, object: JSON2.array(json["feed"]["entry"].arrayObject!))
+                        
+                        
+                        for item in json["feed"]["entry"].arrayValue {
+                            
+                            self.nameArray.append(item["im:name"]["label"].stringValue)
+                            self.summaryArray.append(item["summary"]["label"].stringValue)
+                            self.artistArray.append(item["im:artist"]["label"].stringValue)
+                            self.rightArray.append(item["rights"]["label"].stringValue)
+                            self.releaseDateArray.append(item["im:releaseDate"]["attributes"]["label"].stringValue)
+                            self.categoryArray.append(item["category"]["attributes"]["label"].stringValue)
+                            self.urlArray.append(item["im:image"][1]["label"].stringValue)
+                        }
+                        DispatchQueue.main.async() { () -> Void in
+                            
+                            self.collectionView?.reloadData()
+                            self.activityIndicator?.stopAnimating()
+                            self.activityIndicator2?.stopAnimating()
+                            
+                        }
+                        
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+                
+            }
+            
+        }
+        
+    }
+
 
     // MARK: - Navigation
     
@@ -355,7 +369,7 @@ class AppCollectionViewController: UICollectionViewController {
             let indexPath = collectionView?.indexPath(for: sender as! UICollectionViewCell)
 
             
-            let detailVC = segue.destination as! DetailViewController
+            let detailVC = segue.destination as! ViewController
             
             detailVC.appName = nameArray[(indexPath?.row)!]
             detailVC.rights = rightArray[(indexPath?.row)!]
@@ -367,6 +381,11 @@ class AppCollectionViewController: UICollectionViewController {
             
         }
  
+    }
+    
+    func performSegueFromApps () {
+        
+        performSegue(withIdentifier: "idFirstSegueUnwind", sender: self)
     }
     
 

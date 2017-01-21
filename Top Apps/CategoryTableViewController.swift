@@ -15,7 +15,7 @@ import PMAlertController
 
 class CategoryTableViewController: UITableViewController {
     
-    // Creacion de las categorias del App Store
+    // MARK: - Vatiables
     
     let categoryArray = ["📙 Books", "📊 Business" , "📖 Catalogues", "🎓 Education","📺 Entertainment" , "💰 Finance", "🍕 Food & Drink", "🎮 Games", "💊 Health & Fitness", "🏄🏽 Lifestyle", "📰 Magazines & Newspapers", "💉 Medical", "🎤 Music", "🛳 Navigation", "🗞 News", "🎥 Photo & Video", "📈 Productivity", "📁 Reference", "🛍 Shopping", "👫 Social Networking", "🏀 Sports", "✈️ Travel", "⚒ Utilities", "☔️ Weather" ]
     
@@ -28,6 +28,9 @@ class CategoryTableViewController: UITableViewController {
     fileprivate lazy var presentationAnimator = GuillotineTransitionAnimation()
 
     @IBOutlet weak var menuButton: UIBarButtonItem!
+    
+    
+    //MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -209,7 +212,7 @@ class CategoryTableViewController: UITableViewController {
         
     }
     
-    // Reachability for internet connection
+    // MARK: - Reachability for internet connection
     
     func reachabilityChanged(note: NSNotification) {
         
@@ -252,6 +255,7 @@ class CategoryTableViewController: UITableViewController {
     }
     
 
+    // MARK: - Guillotine Meny Setup
     @IBAction func showMenu2(_ sender: Any) {
         setUpMenu()
     }
@@ -259,6 +263,7 @@ class CategoryTableViewController: UITableViewController {
         
        setUpMenu()
     }
+    
     
     func setUpMenu () {
         let menuViewController = storyboard!.instantiateViewController(withIdentifier: "guillotineMenu") as! MenuViewController

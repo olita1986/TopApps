@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
 
 class AppCollectionReusableView: UICollectionReusableView {
     
+    @IBOutlet weak var activityIndicator2: NVActivityIndicatorView!
+    @IBOutlet weak var activityIndicator: NVActivityIndicatorView!
     @IBOutlet weak var titleLabel: UILabel!
     override func layoutSubviews() {
         titleLabel.layer.cornerRadius = 8

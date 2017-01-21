@@ -11,8 +11,6 @@ import ReachabilitySwift
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var releaseDateLabel: UILabel!
     var image: UIImage?
     var summary = ""
     var category = ""
@@ -21,7 +19,8 @@ class ViewController: UIViewController {
     var date = ""
     var appName = ""
     
-    
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var appImageView: UIImageView!
     @IBOutlet weak var summaryTextView: UITextView!
     @IBOutlet weak var categoryLabel: UILabel!
@@ -124,7 +123,7 @@ class ViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         
-        // Circular ImageView
+        // Roundd ImageView
         appImageView.layer.cornerRadius = 15
         
         appImageView.layer.borderWidth = 1
@@ -151,7 +150,7 @@ class ViewController: UIViewController {
         descriptionLabel.alpha = 0
         releaseDateLabel.alpha = 0
         
-        UIView.animate(withDuration: 0.9, animations: {
+        UIView.animate(withDuration: 1, animations: {
             
             self.appImageView.alpha = 1
             

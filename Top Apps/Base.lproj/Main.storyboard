@@ -102,7 +102,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mFV-C1-RaH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1446" y="-825"/>
+            <point key="canvasLocation" x="-1594" y="-650"/>
         </scene>
         <!--Categories-->
         <scene sceneID="mGQ-iN-5Gu">
@@ -144,7 +144,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Lx-yS-Kdi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1445.625" y="40.140845070422536"/>
+            <point key="canvasLocation" x="-1592" y="39"/>
         </scene>
         <!--Apps Table View Controller-->
         <scene sceneID="qJk-Id-Kbf">
@@ -292,7 +292,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Qs-1q-bCi" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="0E8-fd-NaY" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-744" y="22"/>
+            <point key="canvasLocation" x="-776" y="40"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -433,7 +433,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <exit id="Iva-5q-CLd" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="375" y="40.140845070422536"/>
+            <point key="canvasLocation" x="30" y="40"/>
         </scene>
         <!--Scrolling Navigation Controller-->
         <scene sceneID="KGA-6M-2H3">

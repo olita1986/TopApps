@@ -32,7 +32,7 @@ class AppsTableViewController: UITableViewController {
     
     let hybridCache = HybridCache(name: "Mix")
     
- 
+    //MARK: - IBOutlets
     @IBOutlet weak var activityIndicator: NVActivityIndicatorView!
    
     @IBOutlet weak var activityIndicator2: NVActivityIndicatorView!
@@ -103,9 +103,7 @@ class AppsTableViewController: UITableViewController {
         if let navigationController = navigationController as? ScrollingNavigationController {
             navigationController.stopFollowingScrollView()
         }
-        
-    
-        
+
         self.navigationController?.navigationBar.isHidden = true
     }
     
@@ -227,9 +225,7 @@ class AppsTableViewController: UITableViewController {
             }
         } else {
             
-            
-            //application.createAlert(title: "Oops!", message: "You don't have Internet connection!")
-            
+        
             self.perform(#selector(AppsTableViewController.alert), with: nil, afterDelay: 1)
             
         }
@@ -241,7 +237,7 @@ class AppsTableViewController: UITableViewController {
         
     }
     
-    // MARK: - Helper method for creating alerts
+    // MARK: - Helper methods 
     
     func createAlert (title: String, message: String) {
         
