@@ -25,6 +25,9 @@
 		C863EDA21D9829F000EBDBC5 /* SecondCustomSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C863EDA11D9829F000EBDBC5 /* SecondCustomSegue.swift */; };
 		C863EDA41D982A0500EBDBC5 /* SecondCustomSegueUnwind.swift in Sources */ = {isa = PBXBuildFile; fileRef = C863EDA31D982A0500EBDBC5 /* SecondCustomSegueUnwind.swift */; };
 		C863EDA61D989F9100EBDBC5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C863EDA51D989F9100EBDBC5 /* DetailViewController.swift */; };
+		C8748B401E33C11700A190A3 /* AppCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8748B3F1E33C11700A190A3 /* AppCollectionReusableView.swift */; };
+		C8748B461E33CC0800A190A3 /* ranking.png in Resources */ = {isa = PBXBuildFile; fileRef = C8748B451E33CC0800A190A3 /* ranking.png */; };
+		C8748B481E33CE9B00A190A3 /* exclametionMark.png in Resources */ = {isa = PBXBuildFile; fileRef = C8748B471E33CE9B00A190A3 /* exclametionMark.png */; };
 		C89462191E3048610091148E /* background_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C89462181E3048610091148E /* background_1.jpg */; };
 		C894621D1E3106CF0091148E /* background_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C894621C1E3106CF0091148E /* background_2.jpg */; };
 		C89462201E311DC80091148E /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894621F1E311DC80091148E /* MenuViewController.swift */; };
@@ -55,6 +58,9 @@
 		C863EDA11D9829F000EBDBC5 /* SecondCustomSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondCustomSegue.swift; sourceTree = "<group>"; };
 		C863EDA31D982A0500EBDBC5 /* SecondCustomSegueUnwind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondCustomSegueUnwind.swift; sourceTree = "<group>"; };
 		C863EDA51D989F9100EBDBC5 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		C8748B3F1E33C11700A190A3 /* AppCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCollectionReusableView.swift; sourceTree = "<group>"; };
+		C8748B451E33CC0800A190A3 /* ranking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ranking.png; sourceTree = "<group>"; };
+		C8748B471E33CE9B00A190A3 /* exclametionMark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exclametionMark.png; sourceTree = "<group>"; };
 		C89462181E3048610091148E /* background_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background_1.jpg; sourceTree = "<group>"; };
 		C894621C1E3106CF0091148E /* background_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background_2.jpg; sourceTree = "<group>"; };
 		C894621F1E311DC80091148E /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -112,10 +118,8 @@
 		C834D8441D95972600B9E1AF /* iPhone App Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C834D8401D95944A00B9E1AF /* AppsTableViewController.swift */,
-				C834D8421D9594A200B9E1AF /* AppsTableViewCell.swift */,
-				C834D8471D95B2BF00B9E1AF /* CategoryTableViewController.swift */,
-				C834D8301D9593C600B9E1AF /* ViewController.swift */,
+				C8748B441E33C31400A190A3 /* Main Views */,
+				C8748B431E33C30B00A190A3 /* Cells */,
 			);
 			name = "iPhone App Controllers";
 			sourceTree = "<group>";
@@ -132,9 +136,8 @@
 		C834D84C1D95D94500B9E1AF /* iPad Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C85291C91D96001800B9B286 /* AppCollectionViewController.swift */,
-				C85291CB1D96009100B9B286 /* AppCollectionViewCell.swift */,
-				C863EDA51D989F9100EBDBC5 /* DetailViewController.swift */,
+				C8748B421E33C2FC00A190A3 /* Main Views */,
+				C8748B411E33C2E500A190A3 /* Cells */,
 			);
 			name = "iPad Controllers";
 			sourceTree = "<group>";
@@ -168,10 +171,48 @@
 			name = Helpers;
 			sourceTree = "<group>";
 		};
+		C8748B411E33C2E500A190A3 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				C85291CB1D96009100B9B286 /* AppCollectionViewCell.swift */,
+				C8748B3F1E33C11700A190A3 /* AppCollectionReusableView.swift */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		C8748B421E33C2FC00A190A3 /* Main Views */ = {
+			isa = PBXGroup;
+			children = (
+				C85291C91D96001800B9B286 /* AppCollectionViewController.swift */,
+				C863EDA51D989F9100EBDBC5 /* DetailViewController.swift */,
+			);
+			name = "Main Views";
+			sourceTree = "<group>";
+		};
+		C8748B431E33C30B00A190A3 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				C834D8421D9594A200B9E1AF /* AppsTableViewCell.swift */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		C8748B441E33C31400A190A3 /* Main Views */ = {
+			isa = PBXGroup;
+			children = (
+				C834D8401D95944A00B9E1AF /* AppsTableViewController.swift */,
+				C834D8471D95B2BF00B9E1AF /* CategoryTableViewController.swift */,
+				C834D8301D9593C600B9E1AF /* ViewController.swift */,
+			);
+			name = "Main Views";
+			sourceTree = "<group>";
+		};
 		C89462171E30484F0091148E /* images */ = {
 			isa = PBXGroup;
 			children = (
+				C8748B451E33CC0800A190A3 /* ranking.png */,
 				C89462211E3124370091148E /* Screen Shot 2017-01-19 at 12.42.15.png */,
+				C8748B471E33CE9B00A190A3 /* exclametionMark.png */,
 				C894621C1E3106CF0091148E /* background_2.jpg */,
 				C89462181E3048610091148E /* background_1.jpg */,
 			);
@@ -267,6 +308,8 @@
 				C834D8361D9593C700B9E1AF /* Assets.xcassets in Resources */,
 				C89462221E3124370091148E /* Screen Shot 2017-01-19 at 12.42.15.png in Resources */,
 				C834D8341D9593C700B9E1AF /* Main.storyboard in Resources */,
+				C8748B481E33CE9B00A190A3 /* exclametionMark.png in Resources */,
+				C8748B461E33CC0800A190A3 /* ranking.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,6 +373,7 @@
 				C84B42121D9612B200C7231D /* FirstCustomSegueUnwind.swift in Sources */,
 				C863EDA61D989F9100EBDBC5 /* DetailViewController.swift in Sources */,
 				C834D8481D95B2BF00B9E1AF /* CategoryTableViewController.swift in Sources */,
+				C8748B401E33C11700A190A3 /* AppCollectionReusableView.swift in Sources */,
 				C834D8411D95944A00B9E1AF /* AppsTableViewController.swift in Sources */,
 				C834D82F1D9593C600B9E1AF /* AppDelegate.swift in Sources */,
 				C89462201E311DC80091148E /* MenuViewController.swift in Sources */,
@@ -460,6 +504,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DD380A5731367A061A403C88 /* Pods-Top Apps.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = F4F2VWBSVP;
 				INFOPLIST_FILE = "Top Apps/Info.plist";
@@ -476,6 +521,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1D1DD33F523481D8B64A0CA0 /* Pods-Top Apps.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = F4F2VWBSVP;
 				INFOPLIST_FILE = "Top Apps/Info.plist";

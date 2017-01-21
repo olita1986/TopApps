@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Top Apps/CategoryTableViewController.swift"
-            timestampString = "506536493.116456"
+            timestampString = "506714228.9209"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
+            startingLineNumber = "223"
+            endingLineNumber = "223"
             landmarkName = "reachabilityChanged(note:)"
             landmarkType = "7">
          </BreakpointContent>

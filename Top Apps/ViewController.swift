@@ -71,12 +71,22 @@ class ViewController: UIViewController {
         
         NotificationCenter.default.post(name: ReachabilityChangedNotification, object: reachability)
         
+        self.navigationController?.navigationBar.isHidden = false
+        
+        self.navigationController?.navigationBar.alpha = 0
+        
+        UIView.animate(withDuration: 0.5) {
+            self.navigationController?.navigationBar.alpha = 1
+        }
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
+        
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     // Reachability for internet connection

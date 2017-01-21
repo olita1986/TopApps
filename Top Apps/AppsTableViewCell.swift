@@ -22,7 +22,7 @@ class AppsTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        // Circular ImageView
+        // Rounded ImageView
         appImageView.layer.cornerRadius = 15
         
         appImageView.layer.borderWidth = 1

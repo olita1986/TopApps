@@ -10,6 +10,7 @@ import UIKit
 import ReachabilitySwift
 import AMScrollingNavbar
 import GuillotineMenu
+import PMAlertController
 
 
 class CategoryTableViewController: UITableViewController {
@@ -22,6 +23,7 @@ class CategoryTableViewController: UITableViewController {
     let genreArray = ["6018", "6000", "6022", "6017", "6016", "6015", "6023", "6014", "6013", "6012", "6020", "6011", "6010", "6009", "6021" , "6008", "6007", "6006","6024", "6005", "6004", "6003", "6002", "6001"]
     
      var timer = Timer()
+    var name = ""
     
     fileprivate lazy var presentationAnimator = GuillotineTransitionAnimation()
 
@@ -34,6 +36,40 @@ class CategoryTableViewController: UITableViewController {
         
         imageView.contentMode = .scaleAspectFill
         tableView.backgroundView = imageView
+        
+        
+        if UserDefaults.standard.string(forKey: "welcome") == nil {
+            
+            let alertVC = PMAlertController(title: "Welcome to Top Apps", description: "Please Enter Your Name", image: UIImage(named: "exclametionMark.png"), style: .alert)
+            
+            alertVC.addTextField { (textField) in
+                textField?.placeholder = "E.g: Orlando"
+            }
+            
+        
+            alertVC.addAction(PMAlertAction(title: "OK", style: .default, action: { () in
+                
+                self.name = alertVC.textFields[0].text!
+                self.perform(#selector(CategoryTableViewController.secondAlert), with: nil, afterDelay: 0.5)
+               
+            }))
+            
+           
+            self.present(alertVC, animated: true, completion: nil)
+            
+        }
+        
+    }
+    
+    func secondAlert () {
+        
+        let alertVC2 = PMAlertController(title: "Welcome " + self.name, description: "Here you will find the top 25 Apps for each category shown. Don't forget to visit 'Info' on the left top corner. Enjoy", image: UIImage(named:"ranking.png"), style: .walkthrough )
+        
+        alertVC2.addAction(PMAlertAction(title: "Ok", style: .default, action: {
+            UserDefaults.standard.set("welcomed", forKey: "welcome")
+        }))
+        
+        self.present(alertVC2, animated: true, completion: nil)
         
     }
     
@@ -52,6 +88,14 @@ class CategoryTableViewController: UITableViewController {
         if let navigationController = navigationController as? ScrollingNavigationController {
             navigationController.followScrollView(tableView, delay: 50.0)
         }
+        
+        self.navigationController?.navigationBar.isHidden = false
+        
+        self.navigationController?.navigationBar.alpha = 0
+        
+        UIView.animate(withDuration: 0.5) { 
+             self.navigationController?.navigationBar.alpha = 1
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -62,6 +106,10 @@ class CategoryTableViewController: UITableViewController {
         if let navigationController = navigationController as? ScrollingNavigationController {
             navigationController.stopFollowingScrollView()
         }
+        
+        self.navigationController?.navigationBar.isHidden = true
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -142,6 +190,7 @@ class CategoryTableViewController: UITableViewController {
             let appVC = segue.destination as! AppCollectionViewController
             
             appVC.categoryNumber = genreArray[indexPath.section]
+            appVC.appTitle = categoryArray[indexPath.section]
             
         } else {
             

@@ -12,6 +12,8 @@ import SwiftyJSON
 import AMScrollingNavbar
 import ReachabilitySwift
 import Cache
+import NVActivityIndicatorView
+
 
 class AppsTableViewController: UITableViewController {
 
@@ -29,6 +31,11 @@ class AppsTableViewController: UITableViewController {
     var appTitle = ""
     
     let hybridCache = HybridCache(name: "Mix")
+    
+ 
+    @IBOutlet weak var activityIndicator: NVActivityIndicatorView!
+   
+    @IBOutlet weak var activityIndicator2: NVActivityIndicatorView!
     
     @IBOutlet weak var titleLabel: UILabel!
     
@@ -54,6 +61,10 @@ class AppsTableViewController: UITableViewController {
          tableView.backgroundView = imageView
         
         setTitleLabel()
+   
+        activityIndicator.type = .lineScalePulseOut
+        activityIndicator2.type = .lineScalePulseOut
+       
         
     }
     
@@ -73,6 +84,14 @@ class AppsTableViewController: UITableViewController {
         if let navigationController = navigationController as? ScrollingNavigationController {
             navigationController.followScrollView(tableView, delay: 50.0)
         }
+        
+        
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.alpha = 0
+        
+        UIView.animate(withDuration: 0.5) {
+            self.navigationController?.navigationBar.alpha = 1
+        }
       
     }
     
@@ -84,6 +103,10 @@ class AppsTableViewController: UITableViewController {
         if let navigationController = navigationController as? ScrollingNavigationController {
             navigationController.stopFollowingScrollView()
         }
+        
+    
+        
+        self.navigationController?.navigationBar.isHidden = true
     }
     
 
@@ -152,6 +175,7 @@ class AppsTableViewController: UITableViewController {
                                 DispatchQueue.main.async() { () -> Void in
                                     
                                    cell.appImageView.image = image
+                                
                                 }
                         }
                     }
@@ -231,6 +255,8 @@ class AppsTableViewController: UITableViewController {
         
     }
     
+
+    
     func setTitleLabel () {
         
         titleLabel.text = self.appTitle
@@ -271,6 +297,8 @@ class AppsTableViewController: UITableViewController {
                 }
             } else {
                 
+                self.activityIndicator.startAnimating()
+                self.activityIndicator2.startAnimating()
                 var string = ""
                 
                 if UIDevice.current.userInterfaceIdiom == .pad {
@@ -308,10 +336,14 @@ class AppsTableViewController: UITableViewController {
                         DispatchQueue.main.async() { () -> Void in
                             
                             self.tableView.reloadData()
+                            self.activityIndicator.stopAnimating()
+                            self.activityIndicator2.stopAnimating()
+                            
                         }
                         
                     case .failure(let error):
                         print(error.localizedDescription)
+                        
                     }
                 }
                 

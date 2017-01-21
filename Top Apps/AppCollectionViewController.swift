@@ -13,6 +13,7 @@ import Alamofire
 import Cache
 
 
+
 private let reuseIdentifier = "Cell"
 
 class AppCollectionViewController: UICollectionViewController {
@@ -20,6 +21,7 @@ class AppCollectionViewController: UICollectionViewController {
     var indexPathRow = 0
     
     var categoryNumber = ""
+    var appTitle = ""
     var urlArray = [String]()
     var nameArray = [String]()
     var categoryArray = [String]()
@@ -30,6 +32,8 @@ class AppCollectionViewController: UICollectionViewController {
     var cache =  NSCache<AnyObject, UIImage>()
     
     let hybridCache = HybridCache(name: "Mix")
+    
+  
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +50,10 @@ class AppCollectionViewController: UICollectionViewController {
         
         let leftBarButton = UIBarButtonItem(title: "< Categories", style: .done, target: self, action: #selector(AppCollectionViewController.performSegueFromApps))
         self.navigationItem.leftBarButtonItem = leftBarButton
+        
+        setLayOut()
+        
+   
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,6 +75,18 @@ class AppCollectionViewController: UICollectionViewController {
         
         NotificationCenter.default.removeObserver(self)
         
+    }
+    
+ 
+    func setLayOut () {
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left:50, bottom: 10, right: 50)
+        layout.itemSize = CGSize(width: 263, height: 157)
+        layout.minimumInteritemSpacing = 20
+        layout.minimumLineSpacing = 20
+        layout.headerReferenceSize = CGSize(width: self.view.bounds.width, height: 156)
+        
+        collectionView!.collectionViewLayout = layout
     }
     
     // MARK: - Reachability for internet connection
@@ -105,6 +125,7 @@ class AppCollectionViewController: UICollectionViewController {
     
     func getTopApps (category: String) {
         
+       
         
         hybridCache.object(category) { (json: JSON2?) in
             
@@ -129,6 +150,7 @@ class AppCollectionViewController: UICollectionViewController {
                 }
             } else {
                 
+           
                 var string = ""
                 
                 if UIDevice.current.userInterfaceIdiom == .pad {
@@ -166,6 +188,7 @@ class AppCollectionViewController: UICollectionViewController {
                         DispatchQueue.main.async() { () -> Void in
                             
                             self.collectionView?.reloadData()
+                     
                         }
                         
                     case .failure(let error):
@@ -201,6 +224,35 @@ class AppCollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
+        cell.alpha = 0
+        
+        let transform = CATransform3DTranslate(CATransform3DIdentity, 20, 250, 0)
+        
+        cell.layer.transform = transform
+        
+        UIView.animate(withDuration: 1) {
+            cell.alpha = 1
+            cell.layer.transform = CATransform3DIdentity
+            
+        }
+        
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        switch kind {
+            
+        case UICollectionElementKindSectionHeader:
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as! AppCollectionReusableView
+            
+            headerView.titleLabel.text = self.title
+            
+            return headerView
+            
+        default:
+            fatalError("Unexpected element kind")
+        }
+        
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -211,19 +263,14 @@ class AppCollectionViewController: UICollectionViewController {
         cell.appNameLabel.text = nameArray[indexPath.row]
         
         cell.categoryLabel.text = categoryArray[indexPath.row]
-        
-        // Circular ImageView
-        cell.appImageView.layer.cornerRadius = 15
-        
-        cell.appImageView.layer.borderWidth = 1
-        cell.appImageView.layer.borderColor = UIColor.lightGray.cgColor
-        
-        cell.appImageView.clipsToBounds = true
-        
+    
+        cell.numerLabel.text = String(indexPath.row + 1)
         
         if let image = cache.object(forKey: self.categoryNumber + "\(indexPath.row)" as AnyObject) {
             
             cell.appImageView.image = image
+            
+           // print(image)
             
         } else {
             
@@ -249,6 +296,7 @@ class AppCollectionViewController: UICollectionViewController {
                             DispatchQueue.main.async() { () -> Void in
                                 
                                 cell.appImageView.image = image
+                        
                             }
                         }
                     }
@@ -258,6 +306,10 @@ class AppCollectionViewController: UICollectionViewController {
             task.resume()
             
         }
+        
+        cell.layer.cornerRadius = 8
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = UIColor.lightGray.cgColor
 
         
         return cell

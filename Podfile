@@ -13,5 +13,7 @@ pod 'AMScrollingNavbar'
 pod 'ReachabilitySwift', '~> 3'
 pod 'Cache'
 pod 'GuillotineMenu', '~> 3.0'
+pod 'PMAlertController'
+pod 'NVActivityIndicatorView'
 
 end
