@@ -70,22 +70,13 @@ class ViewController: UIViewController {
         
         NotificationCenter.default.post(name: ReachabilityChangedNotification, object: reachability)
         
-        self.navigationController?.navigationBar.isHidden = false
-        
-        self.navigationController?.navigationBar.alpha = 0
-        
-        UIView.animate(withDuration: 0.5) {
-            self.navigationController?.navigationBar.alpha = 1
-        }
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        NotificationCenter.default.removeObserver(self)
+       // NotificationCenter.default.removeObserver(self)
         
-        self.navigationController?.navigationBar.isHidden = true
     }
     
     // Reachability for internet connection
@@ -95,6 +86,8 @@ class ViewController: UIViewController {
         let reachability = note.object as! Reachability
         
         if reachability.isReachable {
+            
+            UserDefaults.standard.set(nil, forKey: "reachable")
             if reachability.isReachableViaWiFi {
                 print("Reachable via WiFi")
             } else {
@@ -102,8 +95,13 @@ class ViewController: UIViewController {
             }
         } else {
             
+            if UserDefaults.standard.string(forKey: "reachable") == nil {
+                
+                self.perform(#selector(AppsTableViewController.alert), with: nil, afterDelay: 1.5)
+                
+                UserDefaults.standard.set("reachable", forKey: "reachable")
+            }
             
-            self.perform(#selector(ViewController.alert), with: nil, afterDelay: 1)
             
         }
     }
@@ -175,7 +173,13 @@ class ViewController: UIViewController {
             alert.dismiss(animated: true, completion: nil)
         }))
         
-        self.present(alert, animated: true, completion: nil)
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            
+            topController.present(alert, animated: true, completion: nil)
+        }
         
     }
     

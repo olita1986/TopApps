@@ -92,13 +92,6 @@ class CategoryTableViewController: UITableViewController {
             navigationController.followScrollView(tableView, delay: 50.0)
         }
         
-        self.navigationController?.navigationBar.isHidden = false
-        
-        self.navigationController?.navigationBar.alpha = 0
-        
-        UIView.animate(withDuration: 0.5) { 
-             self.navigationController?.navigationBar.alpha = 1
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -110,9 +103,7 @@ class CategoryTableViewController: UITableViewController {
             navigationController.stopFollowingScrollView()
         }
         
-        self.navigationController?.navigationBar.isHidden = true
-        
-        
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -219,6 +210,8 @@ class CategoryTableViewController: UITableViewController {
         let reachability = note.object as! Reachability
         
         if reachability.isReachable {
+            
+            UserDefaults.standard.set(nil, forKey: "reachable")
             if reachability.isReachableViaWiFi {
                 print("Reachable via WiFi")
             } else {
@@ -226,10 +219,13 @@ class CategoryTableViewController: UITableViewController {
             }
         } else {
             
+            if UserDefaults.standard.string(forKey: "reachable") == nil {
+                
+                self.perform(#selector(AppsTableViewController.alert), with: nil, afterDelay: 1.5)
+                
+                UserDefaults.standard.set("reachable", forKey: "reachable")
+            }
             
-            //application.createAlert(title: "Oops!", message: "You don't have Internet connection!")
-            
-            self.perform(#selector(CategoryTableViewController.alert), with: nil, afterDelay: 1)
             
         }
     }
@@ -250,7 +246,15 @@ class CategoryTableViewController: UITableViewController {
             alert.dismiss(animated: true, completion: nil)
         }))
         
-        self.present(alert, animated: true, completion: nil)
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+          
+            topController.present(alert, animated: true, completion: nil)
+        }
+        
+        
         
     }
     

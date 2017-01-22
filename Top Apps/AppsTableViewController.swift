@@ -84,26 +84,18 @@ class AppsTableViewController: UITableViewController {
             navigationController.followScrollView(tableView, delay: 50.0)
         }
         
-        
-        self.navigationController?.navigationBar.isHidden = false
-        self.navigationController?.navigationBar.alpha = 0
-        
-        UIView.animate(withDuration: 0.5) {
-            self.navigationController?.navigationBar.alpha = 1
-        }
       
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        NotificationCenter.default.removeObserver(self)
+//        NotificationCenter.default.removeObserver(self)
         
         if let navigationController = navigationController as? ScrollingNavigationController {
             navigationController.stopFollowingScrollView()
         }
 
-        self.navigationController?.navigationBar.isHidden = true
     }
     
 
@@ -219,6 +211,8 @@ class AppsTableViewController: UITableViewController {
         let reachability = note.object as! Reachability
         
         if reachability.isReachable {
+            
+            UserDefaults.standard.set(nil, forKey: "reachable")
             if reachability.isReachableViaWiFi {
                 print("Reachable via WiFi")
             } else {
@@ -226,8 +220,13 @@ class AppsTableViewController: UITableViewController {
             }
         } else {
             
-        
-            self.perform(#selector(AppsTableViewController.alert), with: nil, afterDelay: 1)
+            if UserDefaults.standard.string(forKey: "reachable") == nil {
+                
+                 self.perform(#selector(AppsTableViewController.alert), with: nil, afterDelay: 1.5)
+                
+                UserDefaults.standard.set("reachable", forKey: "reachable")
+            }
+           
             
         }
     }
@@ -248,7 +247,13 @@ class AppsTableViewController: UITableViewController {
             alert.dismiss(animated: true, completion: nil)
         }))
         
-        self.present(alert, animated: true, completion: nil)
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            
+            topController.present(alert, animated: true, completion: nil)
+        }
         
     }
     
