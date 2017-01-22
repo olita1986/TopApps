@@ -62,9 +62,8 @@ class AppsTableViewController: UITableViewController {
         
         setTitleLabel()
    
-        activityIndicator.type = .lineScalePulseOut
-        activityIndicator2.type = .lineScalePulseOut
-       
+      
+        
         
     }
     
@@ -206,6 +205,8 @@ class AppsTableViewController: UITableViewController {
         }
     }
     
+
+
     @IBAction func unwindFromDetail (_ sender: UIStoryboardSegue) {
         
         
@@ -293,6 +294,8 @@ class AppsTableViewController: UITableViewController {
                 }
             } else {
                 
+                self.activityIndicator.type = .lineScalePulseOut
+                self.activityIndicator2.type = .lineScalePulseOut
                 self.activityIndicator.startAnimating()
                 self.activityIndicator2.startAnimating()
                 var string = ""
