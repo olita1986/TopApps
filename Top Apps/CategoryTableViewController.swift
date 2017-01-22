@@ -66,7 +66,7 @@ class CategoryTableViewController: UITableViewController {
     
     func secondAlert () {
         
-        let alertVC2 = PMAlertController(title: "Welcome " + self.name, description: "Here you will find the top 25 Apps for each category shown. Don't forget to visit 'Info' on the left top corner. Enjoy", image: UIImage(named:"ranking.png"), style: .walkthrough )
+        let alertVC2 = PMAlertController(title: "Welcome " + self.name, description: "Here you will find the top 25 Apps in the Apple Apps Store for each category shown. Don't forget to visit 'Info' on the left top corner. Enjoy!", image: UIImage(named:"ranking.png"), style: .walkthrough )
         
         alertVC2.addAction(PMAlertAction(title: "Ok", style: .default, action: {
             UserDefaults.standard.set("welcomed", forKey: "welcome")

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="uEh-NL-uDY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="34J-xP-EW4">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -435,10 +435,106 @@
             </objects>
             <point key="canvasLocation" x="30" y="40"/>
         </scene>
+        <!--Splash View Controller-->
+        <scene sceneID="W94-3B-TsL">
+            <objects>
+                <viewController storyboardIdentifier="splashVC" id="34J-xP-EW4" customClass="SplashViewController" customModule="Top_Apps" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hDZ-ea-drE"/>
+                        <viewControllerLayoutGuide type="bottom" id="hoF-Md-yX9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3Gk-0s-JGJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_2.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="LE3-GB-jgx">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logomakr_4bl8kX.png" translatesAutoresizingMaskIntoConstraints="NO" id="v1r-CG-gLt" customClass="AnimatableImageView" customModule="IBAnimatable">
+                                <rect key="frame" x="78" y="202" width="165" height="165"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="165" id="4Qa-TM-KhF"/>
+                                    <constraint firstAttribute="width" constant="165" id="H3m-6e-hzC"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="rotate">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star.png" translatesAutoresizingMaskIntoConstraints="NO" id="uzu-uT-cFZ" customClass="AnimatableImageView" customModule="IBAnimatable">
+                                <rect key="frame" x="35" y="202" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="gbO-cl-aFL"/>
+                                    <constraint firstAttribute="width" constant="40" id="wFb-Ma-RU2"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star.png" translatesAutoresizingMaskIntoConstraints="NO" id="9rq-BG-fPu" customClass="AnimatableImageView" customModule="IBAnimatable">
+                                <rect key="frame" x="78" y="152" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="olZ-LU-Ugx"/>
+                                    <constraint firstAttribute="height" constant="40" id="why-Dp-zwu"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star.png" translatesAutoresizingMaskIntoConstraints="NO" id="Eeo-6p-Gf0" customClass="AnimatableImageView" customModule="IBAnimatable">
+                                <rect key="frame" x="203" y="152" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="5DS-4O-o6i"/>
+                                    <constraint firstAttribute="height" constant="40" id="gym-Po-byJ"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star.png" translatesAutoresizingMaskIntoConstraints="NO" id="6pa-41-DkH" customClass="AnimatableImageView" customModule="IBAnimatable">
+                                <rect key="frame" x="246" y="202" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="5fz-V6-kfD"/>
+                                    <constraint firstAttribute="height" constant="40" id="8Yp-s0-yDn"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star.png" translatesAutoresizingMaskIntoConstraints="NO" id="omf-Fg-PAz" customClass="AnimatableImageView" customModule="IBAnimatable">
+                                <rect key="frame" x="140" y="133" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="fC3-js-xg1"/>
+                                    <constraint firstAttribute="height" constant="40" id="xgq-y5-4Gu"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="LE3-GB-jgx" firstAttribute="top" secondItem="3Gk-0s-JGJ" secondAttribute="top" id="1iq-bW-fLp"/>
+                            <constraint firstItem="v1r-CG-gLt" firstAttribute="top" secondItem="omf-Fg-PAz" secondAttribute="bottom" constant="29" id="2bw-0P-JJN"/>
+                            <constraint firstItem="omf-Fg-PAz" firstAttribute="centerX" secondItem="3Gk-0s-JGJ" secondAttribute="centerX" id="8It-we-QsH"/>
+                            <constraint firstItem="Eeo-6p-Gf0" firstAttribute="leading" secondItem="omf-Fg-PAz" secondAttribute="trailing" constant="23" id="HWt-tg-wrj"/>
+                            <constraint firstItem="LE3-GB-jgx" firstAttribute="leading" secondItem="3Gk-0s-JGJ" secondAttribute="leading" id="X0e-cr-zm6"/>
+                            <constraint firstItem="6pa-41-DkH" firstAttribute="top" secondItem="v1r-CG-gLt" secondAttribute="top" id="Xwp-lC-40a"/>
+                            <constraint firstItem="hoF-Md-yX9" firstAttribute="top" secondItem="LE3-GB-jgx" secondAttribute="bottom" id="ZAr-c4-qli"/>
+                            <constraint firstItem="v1r-CG-gLt" firstAttribute="top" secondItem="9rq-BG-fPu" secondAttribute="bottom" constant="10" id="aQg-g2-ePM"/>
+                            <constraint firstItem="omf-Fg-PAz" firstAttribute="leading" secondItem="9rq-BG-fPu" secondAttribute="trailing" constant="22" id="dAi-22-LZV"/>
+                            <constraint firstItem="6pa-41-DkH" firstAttribute="leading" secondItem="v1r-CG-gLt" secondAttribute="trailing" constant="3" id="e3R-Rv-4Wo"/>
+                            <constraint firstItem="v1r-CG-gLt" firstAttribute="centerX" secondItem="3Gk-0s-JGJ" secondAttribute="centerX" id="hSc-Ul-pqf"/>
+                            <constraint firstAttribute="trailing" secondItem="LE3-GB-jgx" secondAttribute="trailing" id="iPq-aD-Nsv"/>
+                            <constraint firstItem="v1r-CG-gLt" firstAttribute="top" secondItem="uzu-uT-cFZ" secondAttribute="top" id="inp-E8-ny2"/>
+                            <constraint firstItem="v1r-CG-gLt" firstAttribute="top" secondItem="Eeo-6p-Gf0" secondAttribute="bottom" constant="10" id="pUb-BT-MV5"/>
+                            <constraint firstItem="v1r-CG-gLt" firstAttribute="leading" secondItem="uzu-uT-cFZ" secondAttribute="trailing" constant="3" id="q5s-6a-EtE"/>
+                            <constraint firstItem="v1r-CG-gLt" firstAttribute="centerY" secondItem="3Gk-0s-JGJ" secondAttribute="centerY" id="xFI-U7-Ioe"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="logoImageView" destination="v1r-CG-gLt" id="2MD-Ef-4px"/>
+                        <outlet property="starIV1" destination="uzu-uT-cFZ" id="TG4-P3-Fqt"/>
+                        <outlet property="starIV2" destination="9rq-BG-fPu" id="370-oZ-1bl"/>
+                        <outlet property="starIV3" destination="omf-Fg-PAz" id="aZv-Ow-HbE"/>
+                        <outlet property="starIV4" destination="Eeo-6p-Gf0" id="3YS-xg-cJz"/>
+                        <outlet property="starIV5" destination="6pa-41-DkH" id="5nW-Ga-HNf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uUT-bB-OEf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3528.75" y="36.971830985915496"/>
+        </scene>
         <!--Scrolling Navigation Controller-->
         <scene sceneID="KGA-6M-2H3">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uEh-NL-uDY" customClass="ScrollingNavigationController" customModule="AMScrollingNavbar" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="mainVC" automaticallyAdjustsScrollViewInsets="NO" id="uEh-NL-uDY" customClass="ScrollingNavigationController" customModule="AMScrollingNavbar" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="nVg-sG-WiI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -455,7 +551,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Logomakr_4bl8kX.png" width="202" height="200"/>
         <image name="Screen Shot 2017-01-19 at 12.42.15.png" width="163" height="162"/>
         <image name="background_1.jpg" width="640" height="1136"/>
+        <image name="background_2.jpg" width="640" height="1136"/>
+        <image name="star.png" width="203" height="203"/>
     </resources>
 </document>

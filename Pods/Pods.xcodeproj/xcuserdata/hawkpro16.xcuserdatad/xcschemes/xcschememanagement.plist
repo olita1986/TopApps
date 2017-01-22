@@ -29,6 +29,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>IBAnimatable.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>NVActivityIndicatorView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -72,17 +77,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>2C5C73F16E735AE9B94F378B1F1DDFEA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>31F8F752BC0BAB1579C9BD2C0BBBE9FE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3C9BAB20F3448392D2303CA5F1DA1753</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>536B9F35AFF1A6725F02302B5F55F59B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>537D6D62CCB6BC66AE7BE67348283B61</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>622F3DC4A08FDBEEC7E009DDFBF208B0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -93,11 +103,6 @@
 			<true/>
 		</dict>
 		<key>87A44734D3DF04B37F2D2527744645DE</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>A73D8A5DB956928DC87AC1CE51211381</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -113,6 +118,11 @@
 			<true/>
 		</dict>
 		<key>EFACE05A9F3E7D7EAE3A2BDD90DF3630</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EFF61DBE2AFD5675BF088946FB0AC287</key>
 		<dict>
 			<key>primary</key>
 			<true/>

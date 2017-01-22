@@ -15,5 +15,6 @@ pod 'Cache'
 pod 'GuillotineMenu', '~> 3.0'
 pod 'PMAlertController'
 pod 'NVActivityIndicatorView'
+pod 'IBAnimatable'
 
 end

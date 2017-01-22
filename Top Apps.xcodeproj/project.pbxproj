@@ -28,6 +28,8 @@
 		C8748B461E33CC0800A190A3 /* ranking.png in Resources */ = {isa = PBXBuildFile; fileRef = C8748B451E33CC0800A190A3 /* ranking.png */; };
 		C8748B481E33CE9B00A190A3 /* exclametionMark.png in Resources */ = {isa = PBXBuildFile; fileRef = C8748B471E33CE9B00A190A3 /* exclametionMark.png */; };
 		C8748B4E1E34F42000A190A3 /* Logomakr_4bl8kX.png in Resources */ = {isa = PBXBuildFile; fileRef = C8748B4D1E34F42000A190A3 /* Logomakr_4bl8kX.png */; };
+		C8748B501E34F98500A190A3 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8748B4F1E34F98500A190A3 /* SplashViewController.swift */; };
+		C8748B521E35050700A190A3 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = C8748B511E35050700A190A3 /* star.png */; };
 		C89462191E3048610091148E /* background_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C89462181E3048610091148E /* background_1.jpg */; };
 		C894621D1E3106CF0091148E /* background_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C894621C1E3106CF0091148E /* background_2.jpg */; };
 		C89462201E311DC80091148E /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894621F1E311DC80091148E /* MenuViewController.swift */; };
@@ -61,6 +63,8 @@
 		C8748B451E33CC0800A190A3 /* ranking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ranking.png; sourceTree = "<group>"; };
 		C8748B471E33CE9B00A190A3 /* exclametionMark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exclametionMark.png; sourceTree = "<group>"; };
 		C8748B4D1E34F42000A190A3 /* Logomakr_4bl8kX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logomakr_4bl8kX.png; sourceTree = "<group>"; };
+		C8748B4F1E34F98500A190A3 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		C8748B511E35050700A190A3 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		C89462181E3048610091148E /* background_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background_1.jpg; sourceTree = "<group>"; };
 		C894621C1E3106CF0091148E /* background_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background_2.jpg; sourceTree = "<group>"; };
 		C894621F1E311DC80091148E /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -201,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				C834D8371D9593C700B9E1AF /* LaunchScreen.storyboard */,
+				C8748B4F1E34F98500A190A3 /* SplashViewController.swift */,
 			);
 			name = "Launch Screen";
 			sourceTree = "<group>";
@@ -208,6 +213,7 @@
 		C89462171E30484F0091148E /* images */ = {
 			isa = PBXGroup;
 			children = (
+				C8748B511E35050700A190A3 /* star.png */,
 				C8748B4D1E34F42000A190A3 /* Logomakr_4bl8kX.png */,
 				C8748B451E33CC0800A190A3 /* ranking.png */,
 				C89462211E3124370091148E /* Screen Shot 2017-01-19 at 12.42.15.png */,
@@ -305,6 +311,7 @@
 				C834D8461D95A1CC00B9E1AF /* Default-568h@2x.png in Resources */,
 				C894621D1E3106CF0091148E /* background_2.jpg in Resources */,
 				C834D84A1D95CB9600B9E1AF /* iPadMain.storyboard in Resources */,
+				C8748B521E35050700A190A3 /* star.png in Resources */,
 				C89462191E3048610091148E /* background_1.jpg in Resources */,
 				C834D8361D9593C700B9E1AF /* Assets.xcassets in Resources */,
 				C89462221E3124370091148E /* Screen Shot 2017-01-19 at 12.42.15.png in Resources */,
@@ -374,6 +381,7 @@
 				C84B42121D9612B200C7231D /* FirstCustomSegueUnwind.swift in Sources */,
 				C834D8481D95B2BF00B9E1AF /* CategoryTableViewController.swift in Sources */,
 				C8748B401E33C11700A190A3 /* AppCollectionReusableView.swift in Sources */,
+				C8748B501E34F98500A190A3 /* SplashViewController.swift in Sources */,
 				C834D8411D95944A00B9E1AF /* AppsTableViewController.swift in Sources */,
 				C834D82F1D9593C600B9E1AF /* AppDelegate.swift in Sources */,
 				C89462201E311DC80091148E /* MenuViewController.swift in Sources */,
